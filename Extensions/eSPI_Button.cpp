@@ -2,7 +2,7 @@
 ** Code for the GFX button UI element
 ** Grabbed from Adafruit_GFX library and enhanced to handle any label font
 ***************************************************************************************/
-#include "Button.h"
+#include "eSPI_Button.h"
 
 TFT_eSPI_Button::TFT_eSPI_Button(void) 
 {

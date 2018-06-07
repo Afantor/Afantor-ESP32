@@ -712,7 +712,7 @@ class TFT_eSPI : public Print {
 }; // End of class TFT_eSPI
 
 // Load the Button Class
-#include "Extensions/Button.h"
+#include "Extensions/eSPI_Button.h"
 
 // Load the Sprite Class
 #include "Extensions/Sprite.h"

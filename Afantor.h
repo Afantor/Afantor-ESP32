@@ -89,7 +89,7 @@
 #include "FS.h"
 #include "SD.h"
 
-#include "Display.h"
+#include "utility/Display.h"
 // #include "utility/Config.h"
 // #include "utility/Button.h"
 // #include "utility/Speaker.h"
@@ -119,14 +119,14 @@ class Afant {
 //    // SPEAKER
 //    SPEAKER Speaker;
 //
-//    // LCD
+    // LCD
     AFDisplay Lcd = AFDisplay();
-//
-//    // UART
-//    // HardwareSerial Serial0 = HardwareSerial(0);
-//    // HardwareSerial Serial2 = HardwareSerial(2);
-//
-//    // MPU6050
+
+    // UART
+    // HardwareSerial Serial0 = HardwareSerial(0);
+    // HardwareSerial Serial2 = HardwareSerial(2);
+
+    // MPU6050
 //#ifdef MPU6050_INSDE
 //    MPU6050 IMU = MPU6050();
 //#endif

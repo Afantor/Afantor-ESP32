@@ -4,6 +4,8 @@
 // A slightly different implementation in this TFT_eSPI library allows the button
 // legends to be in any font
 ***************************************************************************************/
+#ifndef _ESPI_BUTTON_H_
+#define _ESPI_BUTTON_H_
 
 class TFT_eSPI_Button {
 
@@ -36,3 +38,5 @@ class TFT_eSPI_Button {
         
         boolean  currstate, laststate;
 };
+
+#endif
