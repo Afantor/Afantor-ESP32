@@ -89,7 +89,7 @@
 #include "FS.h"
 #include "SD.h"
 
-// #include "AFDisplay.h"
+#include "Display.h"
 // #include "utility/Config.h"
 // #include "utility/Button.h"
 // #include "utility/Speaker.h"
@@ -120,7 +120,7 @@ class Afant {
 //    SPEAKER Speaker;
 //
 //    // LCD
-//    AFDisplay Lcd = AFDisplay();
+    AFDisplay Lcd = AFDisplay();
 //
 //    // UART
 //    // HardwareSerial Serial0 = HardwareSerial(0);

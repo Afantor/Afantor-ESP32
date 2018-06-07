@@ -4,6 +4,7 @@
 // from the TFT_eSPI class. Some functions are overridden by this class so that the
 // graphics are written to the Sprite rather than the TFT.
 ***************************************************************************************/
+#include "TFT_eSPI.h"
 
 class TFT_eSprite : public TFT_eSPI {
 
