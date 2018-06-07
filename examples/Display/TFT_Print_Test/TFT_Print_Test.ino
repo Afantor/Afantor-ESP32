@@ -22,7 +22,7 @@ TFT_eSPI tft = TFT_eSPI();  // Invoke library
 
 void setup(void) {
   tft.init();
-  tft.setRotation(2);
+  tft.setRotation(1);
 }
 
 void loop() {

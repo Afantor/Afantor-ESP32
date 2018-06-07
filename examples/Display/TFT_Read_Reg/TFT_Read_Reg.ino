@@ -28,7 +28,7 @@ void setup(void) {
   Serial.begin(115200);
 
   tft.init();
-  tft.setRotation(2);
+  tft.setRotation(1);
 }
 
 //====================================================================================

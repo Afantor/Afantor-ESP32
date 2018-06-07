@@ -19,7 +19,7 @@ void setup()
 
   // Setup the LCD
   tft.init();
-  tft.setRotation(3);
+  tft.setRotation(1);
 }
 
 void loop()

@@ -59,7 +59,7 @@ int blank[19]; // We keep all the strings pixel lengths to optimise the speed of
 void setup() {
   // Setup the TFT display
   tft.init();
-  tft.setRotation(0); // Must be setRotation(0) for this sketch to work correctly
+  tft.setRotation(1); // Must be setRotation(0) for this sketch to work correctly
   tft.fillScreen(TFT_BLACK);
   
   // Setup baud rate and draw top banner

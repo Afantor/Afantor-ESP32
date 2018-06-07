@@ -122,7 +122,7 @@
 // For ESP32 Dev board (only tested with ILI9341 display)
 // The hardware SPI can be mapped to any pins
 
-#define TFT_MISO 19
+#define TFT_MISO -1
 #define TFT_MOSI 23
 #define TFT_SCLK 18
 #define TFT_CS   2  // Chip select control pin

@@ -8,7 +8,7 @@ TFT_eSPI tft = TFT_eSPI(); // Invoke custom library
 
 #define DEG2RAD 0.0174532925
 
-byte inc = 0;
+byte inco = 0;
 unsigned int col = 0;
 
 

@@ -8,7 +8,7 @@ TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
 
 #define LOOP_DELAY 10 // Loop delay to slow things down
 
-byte inc = 0;
+byte inco = 0;
 unsigned int col = 0;
 
 byte red = 31; // Red is the top 5 bits of a 16 bit colour value
@@ -29,18 +29,18 @@ void setup(void) {
 void loop() {
 
   // Continuous elliptical arc drawing
-  fillArc(160, 120, inc * 6, 1, 140, 100, 10, rainbow(col));
+  fillArc(160, 120, inco * 6, 1, 140, 100, 10, rainbow(col));
 
-  // Continuous segmented (inc*2) elliptical arc drawing
-  fillArc(160, 120, ((inc * 2) % 60) * 6, 1, 120, 80, 30, rainbow(col));
+  // Continuous segmented (inco*2) elliptical arc drawing
+  fillArc(160, 120, ((inco * 2) % 60) * 6, 1, 120, 80, 30, rainbow(col));
 
   // Circle drawing using arc with arc width = radius
-  fillArc(160, 120, inc * 6, 1, 42, 42, 42, rainbow(col));
+  fillArc(160, 120, inco * 6, 1, 42, 42, 42, rainbow(col));
 
-  inc++;
+  inco++;
   col += 1;
   if (col > 191) col = 0;
-  if (inc > 59) inc = 0;
+  if (inco > 59) inco = 0;
 
   delay(LOOP_DELAY);
 }
