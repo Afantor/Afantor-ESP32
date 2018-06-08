@@ -33,12 +33,10 @@ code	color
 
  */
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
+#include <Afantor.h>
 
 #define TFT_GREY 0x5AEB
 
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
 
 uint32_t targetTime = 0;                    // for next 1 second timeout
 
@@ -52,12 +50,11 @@ unsigned int colour = 0;
 
 void setup(void) {
   //Serial.begin(115200);
-  tft.init();
-  tft.setRotation(1);
-  tft.fillScreen(TFT_BLACK);
+  AF.begin();
+  AF.LCD.fillScreen(TFT_BLACK);
 
-  tft.setTextSize(1);
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  AF.LCD.setTextSize(1);
+  AF.LCD.setTextColor(TFT_YELLOW, TFT_BLACK);
 
   targetTime = millis() + 1000;
 }
@@ -91,12 +88,12 @@ void loop() {
     if (omm != mm) { // Redraw hours and minutes time every minute
       omm = mm;
       // Draw hours and minutes
-      if (hh < 10) xpos += tft.drawChar('0', xpos, ypos, 8); // Add hours leading zero for 24 hr clock
-      xpos += tft.drawNumber(hh, xpos, ypos, 8);             // Draw hours
+      if (hh < 10) xpos += AF.LCD.drawChar('0', xpos, ypos, 8); // Add hours leading zero for 24 hr clock
+      xpos += AF.LCD.drawNumber(hh, xpos, ypos, 8);             // Draw hours
       xcolon = xpos; // Save colon coord for later to flash on/off later
-      xpos += tft.drawChar(':', xpos, ypos - 8, 8);
-      if (mm < 10) xpos += tft.drawChar('0', xpos, ypos, 8); // Add minutes leading zero
-      xpos += tft.drawNumber(mm, xpos, ypos, 8);             // Draw minutes
+      xpos += AF.LCD.drawChar(':', xpos, ypos - 8, 8);
+      if (mm < 10) xpos += AF.LCD.drawChar('0', xpos, ypos, 8); // Add minutes leading zero
+      xpos += AF.LCD.drawNumber(mm, xpos, ypos, 8);             // Draw minutes
       xsecs = xpos; // Sae seconds 'x' position for later display updates
     }
     if (oss != ss) { // Redraw seconds time every second
@@ -104,19 +101,19 @@ void loop() {
       xpos = xsecs;
 
       if (ss % 2) { // Flash the colons on/off
-        tft.setTextColor(0x39C4, TFT_BLACK);        // Set colour to grey to dim colon
-        tft.drawChar(':', xcolon, ypos - 8, 8);     // Hour:minute colon
-        xpos += tft.drawChar(':', xsecs, ysecs, 6); // Seconds colon
-        tft.setTextColor(TFT_YELLOW, TFT_BLACK);    // Set colour back to yellow
+        AF.LCD.setTextColor(0x39C4, TFT_BLACK);        // Set colour to grey to dim colon
+        AF.LCD.drawChar(':', xcolon, ypos - 8, 8);     // Hour:minute colon
+        xpos += AF.LCD.drawChar(':', xsecs, ysecs, 6); // Seconds colon
+        AF.LCD.setTextColor(TFT_YELLOW, TFT_BLACK);    // Set colour back to yellow
       }
       else {
-        tft.drawChar(':', xcolon, ypos - 8, 8);     // Hour:minute colon
-        xpos += tft.drawChar(':', xsecs, ysecs, 6); // Seconds colon
+        AF.LCD.drawChar(':', xcolon, ypos - 8, 8);     // Hour:minute colon
+        xpos += AF.LCD.drawChar(':', xsecs, ysecs, 6); // Seconds colon
       }
 
       //Draw seconds
-      if (ss < 10) xpos += tft.drawChar('0', xpos, ysecs, 6); // Add leading zero
-      tft.drawNumber(ss, xpos, ysecs, 6);                     // Draw seconds
+      if (ss < 10) xpos += AF.LCD.drawChar('0', xpos, ysecs, 6); // Add leading zero
+      AF.LCD.drawNumber(ss, xpos, ysecs, 6);                     // Draw seconds
     }
   }
 }

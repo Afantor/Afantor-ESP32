@@ -2,12 +2,7 @@
 //devised by the British mathematician John Horton Conway in 1970.
 // https://en.wikipedia.org/wiki/Conway's_Game_of_Life
 
-
-#include <SPI.h>
-
-#include <TFT_eSPI.h> // Hardware-specific library
-
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 //#define GRIDX 80
 //#define GRIDY 60
@@ -30,34 +25,33 @@ uint8_t newgrid[GRIDX][GRIDY];
 
 uint16_t genCount = 0;
 
-void setup()   {
+void setup(){
 
   //Set up the display
-  tft.init();
-  tft.setRotation(1);
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextSize(1);
-  tft.setTextColor(TFT_WHITE);
-  tft.setCursor(0, 0);
+  AF.begin();
+  AF.LCD.fillScreen(TFT_BLACK);
+  AF.LCD.setTextSize(1);
+  AF.LCD.setTextColor(TFT_WHITE);
+  AF.LCD.setCursor(0, 0);
 
 }
 
 void loop() {
 
   //Display a simple splash screen
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextSize(2);
-  tft.setTextColor(TFT_WHITE);
-  tft.setCursor(40, 5);
-  tft.println(F("Arduino"));
-  tft.setCursor(35, 25);
-  tft.println(F("Cellular"));
-  tft.setCursor(35, 45);
-  tft.println(F("Automata"));
+  AF.LCD.fillScreen(TFT_BLACK);
+  AF.LCD.setTextSize(2);
+  AF.LCD.setTextColor(TFT_WHITE);
+  AF.LCD.setCursor(40, 5);
+  AF.LCD.println(F("Arduino"));
+  AF.LCD.setCursor(35, 25);
+  AF.LCD.println(F("Cellular"));
+  AF.LCD.setCursor(35, 45);
+  AF.LCD.println(F("Automata"));
 
   delay(1000);
 
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
 
   initGrid();
 
@@ -89,7 +83,7 @@ void drawGrid(void) {
       if ((grid[x][y]) != (newgrid[x][y])) {
         if (newgrid[x][y] == 1) color = 0xFFFF; //random(0xFFFF);
         else color = 0;
-        tft.fillRect(CELLXY * x, CELLXY * y, CELLXY, CELLXY, color);
+        AF.LCD.fillRect(CELLXY * x, CELLXY * y, CELLXY, CELLXY, color);
       }
     }
   }

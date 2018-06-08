@@ -2,10 +2,7 @@
 
 // This will run quite slowly due to the large number of floating point calculations per pixel
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 #define ILI9341_GREY 0x7BEF
 
@@ -19,15 +16,15 @@ void setup()
   //randomSeed(analogRead(A0));
 
   // Setup the LCD
-  tft.init();
-  tft.setRotation(3);
+  AF.begin();
+  AF.LCD.setRotation(3);
 }
 
 void loop()
 {
   runTime = millis();
 
-  tft.fillScreen(ILI9341_BLACK);
+  AF.LCD.fillScreen(ILI9341_BLACK);
   for (int px = 1; px < 320; px++)
   {
     for (int py = 0; py < 240; py++)
@@ -46,7 +43,7 @@ void loop()
         iteration++;
       }
       int color = rainbow((3*iteration+64)%128);
-      yield();tft.drawPixel(px, py, color);
+      yield();AF.LCD.drawPixel(px, py, color);
     }
   }
   while(1) yield();

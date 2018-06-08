@@ -1,10 +1,7 @@
 // This sketch includes a function to draw circle segments
 // for pie charts in 1 degree increments
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI(); // Invoke custom library
+#include <Afantor.h>
 
 #define DEG2RAD 0.0174532925
 
@@ -14,11 +11,9 @@ unsigned int col = 0;
 
 void setup(void)
 {
-  tft.begin();
+  AF.begin();
 
-  tft.setRotation(1);
-
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
 }
 
 void loop() {
@@ -61,7 +56,7 @@ int fillSegment(int x, int y, int start_angle, int sub_angle, int r, unsigned in
     int x2 = cos((i + 1 - 90) * DEG2RAD) * r + x;
     int y2 = sin((i + 1 - 90) * DEG2RAD) * r + y;
 
-    tft.fillTriangle(x1, y1, x2, y2, x, y, colour);
+    AF.LCD.fillTriangle(x1, y1, x2, y2, x, y, colour);
 
     // Copy segment end to sgement start for next segment
     x1 = x2;

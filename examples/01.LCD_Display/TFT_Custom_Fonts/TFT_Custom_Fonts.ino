@@ -22,8 +22,7 @@
 // Note the the tilda symbol ~ does not exist in some fonts at the moment
 #define TEXT "abc MWy 123 |" // Text that will be printed on screen in any font
 
-#include "SPI.h"
-#include "TFT_eSPI.h"
+#include <Afantor.h>
 
 // Stock font and GFXFF reference handle
 #define GFXFF 1
@@ -39,16 +38,11 @@
 #define CF_Y32  &Yellowtail_32
 
 
-// Use hardware SPI
-TFT_eSPI tft = TFT_eSPI();
-
 void setup(void) {
 
   Serial.begin(250000);
   
-  tft.begin();
-
-  tft.setRotation(1);
+  AF.begin();
 
 }
 
@@ -79,72 +73,72 @@ void loop() {
   //Serial.println();
 
   // Set text datum to middle centre (MC_DATUM)
-  tft.setTextDatum(MC_DATUM);
+  AF.LCD.setTextDatum(MC_DATUM);
 
   // Set text colour to white with black background
   // Unlike the stock Adafruit_GFX library, the TFT_eSPI library DOES draw the background
   // for the custom and Free Fonts
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  AF.LCD.setTextColor(TFT_WHITE, TFT_BLACK);
 
-  tft.fillScreen(TFT_MAGENTA);            // Clear screen
-  tft.setFreeFont(FF18);                 // Select the font
-  tft.drawString("Yellowtail 32", 160, 60, GFXFF);// Print the string name of the font
-  tft.setFreeFont(CF_Y32);                 // Select the font
-  tft.drawString(TEXT, 160, 120, GFXFF);// Print the string name of the font
+  AF.LCD.fillScreen(TFT_MAGENTA);            // Clear screen
+  AF.LCD.setFreeFont(FF18);                 // Select the font
+  AF.LCD.drawString("Yellowtail 32", 160, 60, GFXFF);// Print the string name of the font
+  AF.LCD.setFreeFont(CF_Y32);                 // Select the font
+  AF.LCD.drawString(TEXT, 160, 120, GFXFF);// Print the string name of the font
   delay(2000);
 
-  tft.fillScreen(TFT_BLUE);            // Clear screen
-  tft.setFreeFont(FF18);                 // Select the font
-  tft.drawString("Satisfy 24", 160, 60, GFXFF);// Print the string name of the font
-  tft.setFreeFont(CF_S24);                 // Select the font
-  tft.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
+  AF.LCD.fillScreen(TFT_BLUE);            // Clear screen
+  AF.LCD.setFreeFont(FF18);                 // Select the font
+  AF.LCD.drawString("Satisfy 24", 160, 60, GFXFF);// Print the string name of the font
+  AF.LCD.setFreeFont(CF_S24);                 // Select the font
+  AF.LCD.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
   delay(2000);
 
-  tft.fillScreen(TFT_RED);            // Clear screen
-  tft.setFreeFont(FF18);                 // Select the font
-  tft.drawString("Roboto 24", 160, 60, GFXFF);// Print the string name of the font
-  tft.setFreeFont(CF_RT24);                 // Select the font
-  tft.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
+  AF.LCD.fillScreen(TFT_RED);            // Clear screen
+  AF.LCD.setFreeFont(FF18);                 // Select the font
+  AF.LCD.drawString("Roboto 24", 160, 60, GFXFF);// Print the string name of the font
+  AF.LCD.setFreeFont(CF_RT24);                 // Select the font
+  AF.LCD.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
   delay(2000);
 
-  tft.fillScreen(TFT_DARKGREY);            // Clear screen
-  tft.setFreeFont(FF18);                 // Select the font
-  tft.drawString("Orbitron 24", 160, 60, GFXFF);// Print the string name of the font
-  tft.setFreeFont(CF_OL24);                 // Select the font
-  tft.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
+  AF.LCD.fillScreen(TFT_DARKGREY);            // Clear screen
+  AF.LCD.setFreeFont(FF18);                 // Select the font
+  AF.LCD.drawString("Orbitron 24", 160, 60, GFXFF);// Print the string name of the font
+  AF.LCD.setFreeFont(CF_OL24);                 // Select the font
+  AF.LCD.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
   delay(2000);
   
   // Here we do not clear the screen and rely on the new text over-writing the old
-  tft.setFreeFont(FF18);                 // Select the font
-  tft.drawString("Orbitron 32", 160, 60, GFXFF);// Print the string name of the font
-  tft.setFreeFont(CF_OL32);                 // Select the font
-  tft.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
+  AF.LCD.setFreeFont(FF18);                 // Select the font
+  AF.LCD.drawString("Orbitron 32", 160, 60, GFXFF);// Print the string name of the font
+  AF.LCD.setFreeFont(CF_OL32);                 // Select the font
+  AF.LCD.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
   delay(2000);
 
   // Here we use text background padding to over-write the old text
-  tft.fillScreen(TFT_YELLOW);            // Clear screen
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  AF.LCD.fillScreen(TFT_YELLOW);            // Clear screen
+  AF.LCD.setTextColor(TFT_WHITE, TFT_BLACK);
 
   // Here we use text background padding to over-write the old text
-  tft.setTextPadding(tft.width() - 20); // Blanked area will be width of screen minus 20 pixels
-  tft.setFreeFont(FF18);                 // Select the font
-  tft.drawString("Orbitron 32 with padding", 160, 60, GFXFF);// Print the string name of the font
-  tft.setFreeFont(CF_OL32);                 // Select the font
-  tft.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
+  AF.LCD.setTextPadding(AF.LCD.width() - 20); // Blanked area will be width of screen minus 20 pixels
+  AF.LCD.setFreeFont(FF18);                 // Select the font
+  AF.LCD.drawString("Orbitron 32 with padding", 160, 60, GFXFF);// Print the string name of the font
+  AF.LCD.setFreeFont(CF_OL32);                 // Select the font
+  AF.LCD.drawString(TEXT, 160, 120, GFXFF);// Print the test text in the custom font
   delay(2000);
 
   // Use 80 pixel wide padding so old numbers over-write old ones
   // One of the problrms with proportionally spaced numbers is that they jiggle position
-  tft.setTextPadding(80);
-  tft.setTextDatum(MC_DATUM);
-  tft.setFreeFont(CF_OL32);
+  AF.LCD.setTextPadding(80);
+  AF.LCD.setTextDatum(MC_DATUM);
+  AF.LCD.setFreeFont(CF_OL32);
   for( int i = 100; i > 0; i--)
   {
-    tft.drawNumber( i, 160, 200);
+    AF.LCD.drawNumber( i, 160, 200);
     delay(500);
   }
 
   // Reset text padding to zero (default)
-  tft.setTextPadding(0);
+  AF.LCD.setTextPadding(0);
 }
 

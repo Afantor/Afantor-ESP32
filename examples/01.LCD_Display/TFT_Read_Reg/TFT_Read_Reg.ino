@@ -15,10 +15,7 @@
 //                                  Libraries
 //====================================================================================
 
-#include <TFT_eSPI.h> // Graphics and font library for ILI9341 driver chip
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI();  // Invoke library
+#include <Afantor.h>
 
 //====================================================================================
 //                                    Setup
@@ -27,8 +24,7 @@ TFT_eSPI tft = TFT_eSPI();  // Invoke library
 void setup(void) {
   Serial.begin(115200);
 
-  tft.init();
-  tft.setRotation(1);
+  AF.begin();
 }
 
 //====================================================================================
@@ -37,12 +33,12 @@ void setup(void) {
 
 void loop() {
 
-  tft.fillScreen(TFT_BLUE);
-  tft.setCursor(0, 0, 2);
+  AF.LCD.fillScreen(TFT_BLUE);
+  AF.LCD.setCursor(0, 0, 2);
   // Set the font colour to be white with a black background
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  AF.LCD.setTextColor(TFT_WHITE, TFT_BLACK);
   // We can now plot text on screen using the "print" class
-  tft.println("Hello World!");
+  AF.LCD.println("Hello World!");
 
   delay(2000);
 
@@ -73,9 +69,9 @@ void readTest(void)
   Serial.println(); Serial.println("Test 8, 16 and 32 bit reads and the index...");
   // Test 8, 16 and 32 bit reads and index
   // Note at index 0 the register values are typically undefined (Bxxxxxxxx)
-  Serial.println(tft.readcommand8(ILI9341_RDID4, 2), HEX);
-  Serial.println(tft.readcommand16(ILI9341_RDID4, 2), HEX);
-  Serial.println(tft.readcommand32(ILI9341_RDID4, 0), HEX);
+  Serial.println(AF.LCD.readcommand8(ILI9341_RDID4, 2), HEX);
+  Serial.println(AF.LCD.readcommand16(ILI9341_RDID4, 2), HEX);
+  Serial.println(AF.LCD.readcommand32(ILI9341_RDID4, 0), HEX);
 }
 
 //====================================================================================
@@ -118,7 +114,7 @@ uint32_t readRegister(uint8_t reg, int16_t bytes, uint8_t index)
 
   while (bytes > 0) {
     bytes--;
-    data = (data << 8) | tft.readcommand8(reg, index);
+    data = (data << 8) | AF.LCD.readcommand8(reg, index);
     index++;
   }
 

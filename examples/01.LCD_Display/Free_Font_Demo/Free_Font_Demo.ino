@@ -40,19 +40,14 @@
 
 #include "Free_Fonts.h" // Include the header file attached to this sketch
 
-#include "SPI.h"
-#include "TFT_eSPI.h"
+#include <Afantor.h>
 
-// Use hardware SPI
-TFT_eSPI tft = TFT_eSPI();
 
 unsigned long drawTime = 0;
 
 void setup(void) {
 
-  tft.begin();
-
-  tft.setRotation(1);
+  AF.begin();
 
 }
 
@@ -69,32 +64,32 @@ void loop() {
 
   // For comaptibility with Adafruit_GFX library the text background is not plotted when using the print class
   // even if we specify it.
-  tft.setTextColor(TFT_YELLOW);
-  tft.setCursor(xpos, ypos);    // Set cursor near top left corner of screen
+  AF.LCD.setTextColor(TFT_YELLOW);
+  AF.LCD.setCursor(xpos, ypos);    // Set cursor near top left corner of screen
 
-  tft.setFreeFont(TT1);     // Select the orginal small TomThumb font
-  tft.println();             // Move cursor down a line
-  tft.print("The really tiny TomThumb font");    // Print the font name onto the TFT screen
-  tft.println();
-  tft.println();
+  AF.LCD.setFreeFont(TT1);     // Select the orginal small TomThumb font
+  AF.LCD.println();             // Move cursor down a line
+  AF.LCD.print("The really tiny TomThumb font");    // Print the font name onto the TFT screen
+  AF.LCD.println();
+  AF.LCD.println();
 
-  tft.setFreeFont(FSB9);   // Select Free Serif 9 point font, could use:
-  // tft.setFreeFont(&FreeSerif9pt7b);
-  tft.println();          // Free fonts plot with the baseline (imaginary line the letter A would sit on)
+  AF.LCD.setFreeFont(FSB9);   // Select Free Serif 9 point font, could use:
+  // AF.LCD.setFreeFont(&FreeSerif9pt7b);
+  AF.LCD.println();          // Free fonts plot with the baseline (imaginary line the letter A would sit on)
   // as the datum, so we must move the cursor down a line from the 0,0 position
-  tft.print("Serif Bold 9pt");  // Print the font name onto the TFT screen
+  AF.LCD.print("Serif Bold 9pt");  // Print the font name onto the TFT screen
 
-  tft.setFreeFont(FSB12);       // Select Free Serif 12 point font
-  tft.println();                // Move cursor down a line
-  tft.print("Serif Bold 12pt"); // Print the font name onto the TFT screen
+  AF.LCD.setFreeFont(FSB12);       // Select Free Serif 12 point font
+  AF.LCD.println();                // Move cursor down a line
+  AF.LCD.print("Serif Bold 12pt"); // Print the font name onto the TFT screen
 
-  tft.setFreeFont(FSB18);       // Select Free Serif 12 point font
-  tft.println();                // Move cursor down a line
-  tft.print("Serif Bold 18pt"); // Print the font name onto the TFT screen
+  AF.LCD.setFreeFont(FSB18);       // Select Free Serif 12 point font
+  AF.LCD.println();                // Move cursor down a line
+  AF.LCD.print("Serif Bold 18pt"); // Print the font name onto the TFT screen
 
-  tft.setFreeFont(FSB24);       // Select Free Serif 24 point font
-  tft.println();                // Move cursor down a line
-  tft.print("Serif Bold 24pt"); // Print the font name onto the TFT screen
+  AF.LCD.setFreeFont(FSB24);       // Select Free Serif 24 point font
+  AF.LCD.println();                // Move cursor down a line
+  AF.LCD.print("Serif Bold 24pt"); // Print the font name onto the TFT screen
 
 
   delay(4000);
@@ -105,33 +100,33 @@ void loop() {
 
   header("Using drawString()", TFT_BLACK);
 
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  AF.LCD.setTextColor(TFT_WHITE, TFT_BLACK);
 
-  tft.setTextDatum(TC_DATUM); // Centre text on x,y position
+  AF.LCD.setTextDatum(TC_DATUM); // Centre text on x,y position
 
-  xpos = tft.width() / 2; // Half the screen width
+  xpos = AF.LCD.width() / 2; // Half the screen width
   ypos = 50;
 
-  tft.setFreeFont(FSB9);                              // Select the font
-  tft.drawString("Serif Bold 9pt", xpos, ypos, GFXFF);  // Draw the text string in the selected GFX free font
-  ypos += tft.fontHeight(GFXFF);                      // Get the font height and move ypos down
+  AF.LCD.setFreeFont(FSB9);                              // Select the font
+  AF.LCD.drawString("Serif Bold 9pt", xpos, ypos, GFXFF);  // Draw the text string in the selected GFX free font
+  ypos += AF.LCD.fontHeight(GFXFF);                      // Get the font height and move ypos down
 
-  tft.setFreeFont(FSB12);
-  tft.drawString("Serif Bold 12pt", xpos, ypos, GFXFF);
-  ypos += tft.fontHeight(GFXFF);
+  AF.LCD.setFreeFont(FSB12);
+  AF.LCD.drawString("Serif Bold 12pt", xpos, ypos, GFXFF);
+  ypos += AF.LCD.fontHeight(GFXFF);
 
-  tft.setFreeFont(FSB18);
-  tft.drawString("Serif Bold 18pt", xpos, ypos, GFXFF);
-  ypos += tft.fontHeight(GFXFF);
+  AF.LCD.setFreeFont(FSB18);
+  AF.LCD.drawString("Serif Bold 18pt", xpos, ypos, GFXFF);
+  ypos += AF.LCD.fontHeight(GFXFF);
 
-  tft.setFreeFont(FSB24);
-  tft.drawString("Serif Bold 24pt", xpos, ypos, GFXFF);
-  ypos += tft.fontHeight(GFXFF);
+  AF.LCD.setFreeFont(FSB24);
+  AF.LCD.drawString("Serif Bold 24pt", xpos, ypos, GFXFF);
+  ypos += AF.LCD.fontHeight(GFXFF);
 
   // Set text padding to 100 pixels wide area to over-write old values on screen
-  tft.setTextPadding(100);
+  AF.LCD.setTextPadding(100);
   for (int i = 0; i <= 20; i++) {
-    tft.drawFloat(i / 10.0, 1, xpos, ypos, GFXFF);
+    AF.LCD.drawFloat(i / 10.0, 1, xpos, ypos, GFXFF);
     delay (200);
   }
 
@@ -144,33 +139,33 @@ void loop() {
 
   header("With background", TFT_DARKGREY);
 
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  AF.LCD.setTextColor(TFT_YELLOW, TFT_BLACK);
 
-  tft.setTextDatum(TC_DATUM); // Centre text on x,y position
+  AF.LCD.setTextDatum(TC_DATUM); // Centre text on x,y position
 
-  xpos = tft.width() / 2; // Half the screen width
+  xpos = AF.LCD.width() / 2; // Half the screen width
   ypos = 50;
 
-  tft.setFreeFont(FSB9);                              // Select the font
-  tft.drawString("Serif Bold 9pt", xpos, ypos, GFXFF);  // Draw the text string in the selected GFX free font
-  ypos += tft.fontHeight(GFXFF);                        // Get the font height and move ypos down
+  AF.LCD.setFreeFont(FSB9);                              // Select the font
+  AF.LCD.drawString("Serif Bold 9pt", xpos, ypos, GFXFF);  // Draw the text string in the selected GFX free font
+  ypos += AF.LCD.fontHeight(GFXFF);                        // Get the font height and move ypos down
 
-  tft.setFreeFont(FSB12);
-  tft.drawString("Serif Bold 12pt", xpos, ypos, GFXFF);
-  ypos += tft.fontHeight(GFXFF);
+  AF.LCD.setFreeFont(FSB12);
+  AF.LCD.drawString("Serif Bold 12pt", xpos, ypos, GFXFF);
+  ypos += AF.LCD.fontHeight(GFXFF);
 
-  tft.setFreeFont(FSB18);
-  tft.drawString("Serif Bold 18pt", xpos, ypos, GFXFF);
-  ypos += tft.fontHeight(GFXFF);
+  AF.LCD.setFreeFont(FSB18);
+  AF.LCD.drawString("Serif Bold 18pt", xpos, ypos, GFXFF);
+  ypos += AF.LCD.fontHeight(GFXFF);
 
-  tft.setFreeFont(FSBI24);
-  tft.drawString("Bold Italic 24pt", xpos, ypos, GFXFF);
-  ypos += tft.fontHeight(GFXFF);
+  AF.LCD.setFreeFont(FSBI24);
+  AF.LCD.drawString("Bold Italic 24pt", xpos, ypos, GFXFF);
+  ypos += AF.LCD.fontHeight(GFXFF);
 
   // Set text padding to 100 pixels wide area to over-write old values on screen
-  tft.setTextPadding(100);
+  AF.LCD.setTextPadding(100);
   for (int i = 0; i <= 20; i++) {
-    tft.drawFloat(i / 10.0, 1, xpos, ypos, GFXFF);
+    AF.LCD.drawFloat(i / 10.0, 1, xpos, ypos, GFXFF);
     delay (200);
   }
 
@@ -182,76 +177,76 @@ void loop() {
 
   // Numbers, floats and strings can be drawn relative to a datum
   header("Text with a datum", TFT_BLACK);
-  tft.setTextColor(TFT_DARKGREY, TFT_BLACK);
-  tft.setFreeFont(FSS12);
-  tft.setTextDatum(TL_DATUM);
-  tft.drawString("[Top left]", 160, 120, GFXFF);
+  AF.LCD.setTextColor(TFT_DARKGREY, TFT_BLACK);
+  AF.LCD.setFreeFont(FSS12);
+  AF.LCD.setTextDatum(TL_DATUM);
+  AF.LCD.drawString("[Top left]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(TC_DATUM);
-  tft.drawString("[Top centre]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(TC_DATUM);
+  AF.LCD.drawString("[Top centre]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(TR_DATUM);
-  tft.drawString("[Top right]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(TR_DATUM);
+  AF.LCD.drawString("[Top right]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(ML_DATUM);
-  tft.drawString("[Middle left]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(ML_DATUM);
+  AF.LCD.drawString("[Middle left]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(MC_DATUM);
-  tft.drawString("[Middle centre]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(MC_DATUM);
+  AF.LCD.drawString("[Middle centre]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(MR_DATUM);
-  tft.drawString("[Middle right]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(MR_DATUM);
+  AF.LCD.drawString("[Middle right]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(BL_DATUM);
-  tft.drawString("[Bottom left]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(BL_DATUM);
+  AF.LCD.drawString("[Bottom left]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(BC_DATUM);
-  tft.drawString("[Bottom centre]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(BC_DATUM);
+  AF.LCD.drawString("[Bottom centre]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(BR_DATUM);
-  tft.drawString("[Bottom right]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(BR_DATUM);
+  AF.LCD.drawString("[Bottom right]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(L_BASELINE);
-  tft.drawString("[Left baseline]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(L_BASELINE);
+  AF.LCD.drawString("[Left baseline]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(C_BASELINE);
-  tft.drawString("[Centre baseline]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(C_BASELINE);
+  AF.LCD.drawString("[Centre baseline]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
-  tft.fillRect(0, 80, 320, 80, TFT_BLACK);
-  tft.setTextDatum(R_BASELINE);
-  tft.drawString("[Right baseline]", 160, 120, GFXFF);
+  AF.LCD.fillRect(0, 80, 320, 80, TFT_BLACK);
+  AF.LCD.setTextDatum(R_BASELINE);
+  AF.LCD.drawString("[Right baseline]", 160, 120, GFXFF);
   drawDatumMarker(160,120);
   delay(1000);
 
@@ -263,19 +258,19 @@ void loop() {
 // Print the header for a display screen
 void header(const char *string, uint16_t color)
 {
-  tft.fillScreen(color);
-  tft.setTextSize(1);
-  tft.setTextColor(TFT_MAGENTA, TFT_BLUE);
-  tft.fillRect(0, 0, 320, 30, TFT_BLUE);
-  tft.setTextDatum(TC_DATUM);
-  tft.drawString(string, 160, 2, 4); // Font 4 for fast drawing with background
+  AF.LCD.fillScreen(color);
+  AF.LCD.setTextSize(1);
+  AF.LCD.setTextColor(TFT_MAGENTA, TFT_BLUE);
+  AF.LCD.fillRect(0, 0, 320, 30, TFT_BLUE);
+  AF.LCD.setTextDatum(TC_DATUM);
+  AF.LCD.drawString(string, 160, 2, 4); // Font 4 for fast drawing with background
 }
 
 // Draw a + mark centred on x,y
 void drawDatumMarker(int x, int y)
 {
-  tft.drawLine(x - 5, y, x + 5, y, TFT_GREEN);
-  tft.drawLine(x, y - 5, x, y + 5, TFT_GREEN);
+  AF.LCD.drawLine(x - 5, y, x + 5, y, TFT_GREEN);
+  AF.LCD.drawLine(x, y - 5, x, y + 5, TFT_GREEN);
 }
 
 

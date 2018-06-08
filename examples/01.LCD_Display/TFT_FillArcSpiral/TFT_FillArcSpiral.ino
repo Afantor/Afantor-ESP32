@@ -2,10 +2,7 @@
 
 // Sketch also includes (but does not use) a function to change the brightness of a colour
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 #define DEG2RAD 0.0174532925
 
@@ -19,11 +16,10 @@ int delta = -1;
   byte state = 0;
 
 void setup(void) {
-  tft.begin();
 
-  tft.setRotation(1);
+  AF.begin();
 
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
 }
 
 
@@ -76,8 +72,8 @@ int fillArc(int x, int y, int start_angle, int seg_count, int rx, int ry, int w,
     int x3 = sx2 * rx + x;
     int y3 = sy2 * ry + y;
 
-    tft.fillTriangle(x0, y0, x1, y1, x2, y2, colour);
-    tft.fillTriangle(x1, y1, x2, y2, x3, y3, colour);
+    AF.LCD.fillTriangle(x0, y0, x1, y1, x2, y2, colour);
+    AF.LCD.fillTriangle(x1, y1, x2, y2, x3, y3, colour);
   }
 }
 

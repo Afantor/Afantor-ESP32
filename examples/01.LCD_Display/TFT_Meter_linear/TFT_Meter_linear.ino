@@ -13,13 +13,10 @@
 Updated by Bodmer for variable meter size
  */
 
-// Define meter size as 1 for tft.rotation(0) or 1.3333 for tft.rotation(1)
+// Define meter size as 1 for AF.LCD.rotation(0) or 1.3333 for AF.LCD.rotation(1)
 #define M_SIZE 1.3333
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 #define TFT_GREY 0x5AEB
 
@@ -34,10 +31,9 @@ int old_value[6] = { -1, -1, -1, -1, -1, -1};
 int d = 0;
 
 void setup(void) {
-  tft.init();
-  tft.setRotation(1);
+  AF.begin();
   Serial.begin(57600); // For debug
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
 
   analogMeter(); // Draw analogue meter
 
@@ -65,10 +61,10 @@ void analogMeter()
 {
 
   // Meter outline
-  tft.fillRect(0, 0, M_SIZE*239, M_SIZE*126, TFT_GREY);
-  tft.fillRect(5, 3, M_SIZE*230, M_SIZE*119, TFT_WHITE);
+  AF.LCD.fillRect(0, 0, M_SIZE*239, M_SIZE*126, TFT_GREY);
+  AF.LCD.fillRect(5, 3, M_SIZE*230, M_SIZE*119, TFT_WHITE);
 
-  tft.setTextColor(TFT_BLACK);  // Text colour
+  AF.LCD.setTextColor(TFT_BLACK);  // Text colour
 
   // Draw ticks every 5 degrees from -50 to +50 degrees (100 deg. FSD swing)
   for (int i = -50; i < 51; i += 5) {
@@ -93,20 +89,20 @@ void analogMeter()
 
     // Yellow zone limits
     //if (i >= -50 && i < 0) {
-    //  tft.fillTriangle(x0, y0, x1, y1, x2, y2, TFT_YELLOW);
-    //  tft.fillTriangle(x1, y1, x2, y2, x3, y3, TFT_YELLOW);
+    //  AF.LCD.fillTriangle(x0, y0, x1, y1, x2, y2, TFT_YELLOW);
+    //  AF.LCD.fillTriangle(x1, y1, x2, y2, x3, y3, TFT_YELLOW);
     //}
 
     // Green zone limits
     if (i >= 0 && i < 25) {
-      tft.fillTriangle(x0, y0, x1, y1, x2, y2, TFT_GREEN);
-      tft.fillTriangle(x1, y1, x2, y2, x3, y3, TFT_GREEN);
+      AF.LCD.fillTriangle(x0, y0, x1, y1, x2, y2, TFT_GREEN);
+      AF.LCD.fillTriangle(x1, y1, x2, y2, x3, y3, TFT_GREEN);
     }
 
     // Orange zone limits
     if (i >= 25 && i < 50) {
-      tft.fillTriangle(x0, y0, x1, y1, x2, y2, TFT_ORANGE);
-      tft.fillTriangle(x1, y1, x2, y2, x3, y3, TFT_ORANGE);
+      AF.LCD.fillTriangle(x0, y0, x1, y1, x2, y2, TFT_ORANGE);
+      AF.LCD.fillTriangle(x1, y1, x2, y2, x3, y3, TFT_ORANGE);
     }
 
     // Short scale tick length
@@ -119,7 +115,7 @@ void analogMeter()
     y1 = sy * M_SIZE*100 + M_SIZE*140;
 
     // Draw tick
-    tft.drawLine(x0, y0, x1, y1, TFT_BLACK);
+    AF.LCD.drawLine(x0, y0, x1, y1, TFT_BLACK);
 
     // Check if labels should be drawn, with position tweaks
     if (i % 25 == 0) {
@@ -127,11 +123,11 @@ void analogMeter()
       x0 = sx * (M_SIZE*100 + tl + 10) + M_SIZE*120;
       y0 = sy * (M_SIZE*100 + tl + 10) + M_SIZE*140;
       switch (i / 25) {
-        case -2: tft.drawCentreString("0", x0, y0 - 12, 2); break;
-        case -1: tft.drawCentreString("25", x0, y0 - 9, 2); break;
-        case 0: tft.drawCentreString("50", x0, y0 - 7, 2); break;
-        case 1: tft.drawCentreString("75", x0, y0 - 9, 2); break;
-        case 2: tft.drawCentreString("100", x0, y0 - 12, 2); break;
+        case -2: AF.LCD.drawCentreString("0", x0, y0 - 12, 2); break;
+        case -1: AF.LCD.drawCentreString("25", x0, y0 - 9, 2); break;
+        case 0: AF.LCD.drawCentreString("50", x0, y0 - 7, 2); break;
+        case 1: AF.LCD.drawCentreString("75", x0, y0 - 9, 2); break;
+        case 2: AF.LCD.drawCentreString("100", x0, y0 - 12, 2); break;
       }
     }
 
@@ -141,12 +137,12 @@ void analogMeter()
     x0 = sx * M_SIZE*100 + M_SIZE*120;
     y0 = sy * M_SIZE*100 + M_SIZE*140;
     // Draw scale arc, don't draw the last part
-    if (i < 50) tft.drawLine(x0, y0, x1, y1, TFT_BLACK);
+    if (i < 50) AF.LCD.drawLine(x0, y0, x1, y1, TFT_BLACK);
   }
 
-  tft.drawString("%RH", M_SIZE*(5 + 230 - 40), M_SIZE*(119 - 20), 2); // Units at bottom right
-  tft.drawCentreString("%RH", M_SIZE*120, M_SIZE*70, 4); // Comment out to avoid font 4
-  tft.drawRect(5, 3, M_SIZE*230, M_SIZE*119, TFT_BLACK); // Draw bezel line
+  AF.LCD.drawString("%RH", M_SIZE*(5 + 230 - 40), M_SIZE*(119 - 20), 2); // Units at bottom right
+  AF.LCD.drawCentreString("%RH", M_SIZE*120, M_SIZE*70, 4); // Comment out to avoid font 4
+  AF.LCD.drawRect(5, 3, M_SIZE*230, M_SIZE*119, TFT_BLACK); // Draw bezel line
 
   plotNeedle(0, 0); // Put meter needle at 0
 }
@@ -160,9 +156,9 @@ void analogMeter()
 // #########################################################################
 void plotNeedle(int value, byte ms_delay)
 {
-  tft.setTextColor(TFT_BLACK, TFT_WHITE);
+  AF.LCD.setTextColor(TFT_BLACK, TFT_WHITE);
   char buf[8]; dtostrf(value, 4, 0, buf);
-  tft.drawRightString(buf, M_SIZE*40, M_SIZE*(119 - 20), 2);
+  AF.LCD.drawRightString(buf, M_SIZE*40, M_SIZE*(119 - 20), 2);
 
   if (value < -10) value = -10; // Limit value to emulate needle end stops
   if (value > 110) value = 110;
@@ -183,13 +179,13 @@ void plotNeedle(int value, byte ms_delay)
     float tx = tan((sdeg + 90) * 0.0174532925);
 
     // Erase old needle image
-    tft.drawLine(M_SIZE*(120 + 20 * ltx - 1), M_SIZE*(140 - 20), osx - 1, osy, TFT_WHITE);
-    tft.drawLine(M_SIZE*(120 + 20 * ltx), M_SIZE*(140 - 20), osx, osy, TFT_WHITE);
-    tft.drawLine(M_SIZE*(120 + 20 * ltx + 1), M_SIZE*(140 - 20), osx + 1, osy, TFT_WHITE);
+    AF.LCD.drawLine(M_SIZE*(120 + 20 * ltx - 1), M_SIZE*(140 - 20), osx - 1, osy, TFT_WHITE);
+    AF.LCD.drawLine(M_SIZE*(120 + 20 * ltx), M_SIZE*(140 - 20), osx, osy, TFT_WHITE);
+    AF.LCD.drawLine(M_SIZE*(120 + 20 * ltx + 1), M_SIZE*(140 - 20), osx + 1, osy, TFT_WHITE);
 
     // Re-plot text under needle
-    tft.setTextColor(TFT_BLACK);
-    tft.drawCentreString("%RH", M_SIZE*120, M_SIZE*70, 4); // // Comment out to avoid font 4
+    AF.LCD.setTextColor(TFT_BLACK);
+    AF.LCD.drawCentreString("%RH", M_SIZE*120, M_SIZE*70, 4); // // Comment out to avoid font 4
 
     // Store new needle end coords for next erase
     ltx = tx;
@@ -198,9 +194,9 @@ void plotNeedle(int value, byte ms_delay)
 
     // Draw the needle in the new postion, magenta makes needle a bit bolder
     // draws 3 lines to thicken needle
-    tft.drawLine(M_SIZE*(120 + 20 * ltx - 1), M_SIZE*(140 - 20), osx - 1, osy, TFT_RED);
-    tft.drawLine(M_SIZE*(120 + 20 * ltx), M_SIZE*(140 - 20), osx, osy, TFT_MAGENTA);
-    tft.drawLine(M_SIZE*(120 + 20 * ltx + 1), M_SIZE*(140 - 20), osx + 1, osy, TFT_RED);
+    AF.LCD.drawLine(M_SIZE*(120 + 20 * ltx - 1), M_SIZE*(140 - 20), osx - 1, osy, TFT_RED);
+    AF.LCD.drawLine(M_SIZE*(120 + 20 * ltx), M_SIZE*(140 - 20), osx, osy, TFT_MAGENTA);
+    AF.LCD.drawLine(M_SIZE*(120 + 20 * ltx + 1), M_SIZE*(140 - 20), osx + 1, osy, TFT_RED);
 
     // Slow needle down slightly as it approaches new postion
     if (abs(old_analog - value) < 10) ms_delay += ms_delay / 5;

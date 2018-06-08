@@ -1,10 +1,6 @@
 // Animates white pixels to simulate flying through a star field
 
-#include <SPI.h>
-#include <TFT_eSPI.h>
-
-// Use hardware SPI
-TFT_eSPI tft = TFT_eSPI();
+#include <Afantor.h>
 
 // With 1024 stars the update rate is ~65 frames per second
 #define NSTARS 1024
@@ -31,14 +27,13 @@ void setup() {
   zx = random(256);
 
   Serial.begin(115200);
-  tft.init();
-  tft.setRotation(1);
-  tft.fillScreen(TFT_BLACK);
+  AF.begin();
+  AF.LCD.fillScreen(TFT_BLACK);
 
   // fastSetup() must be used immediately before fastPixel() to prepare screen
   // It must be called after any other graphics drawing function call if fastPixel()
   // is to be called again
-  //tft.fastSetup(); // Prepare plot window range for fast pixel plotting
+  //AF.LCD.fastSetup(); // Prepare plot window range for fast pixel plotting
 }
 
 void loop()
@@ -60,7 +55,7 @@ void loop()
       int old_screen_y = ((int)sy[i] - 120) * 256 / sz[i] + 120;
 
       // This is a faster pixel drawing function for occassions where many single pixels must be drawn
-      tft.drawPixel(old_screen_x, old_screen_y,TFT_BLACK);
+      AF.LCD.drawPixel(old_screen_x, old_screen_y,TFT_BLACK);
 
       sz[i] -= 2;
       if (sz[i] > 1)
@@ -72,7 +67,7 @@ void loop()
         {
           uint8_t r, g, b;
           r = g = b = 255 - sz[i];
-          tft.drawPixel(screen_x, screen_y, tft.color565(r,g,b));
+          AF.LCD.drawPixel(screen_x, screen_y, AF.LCD.color565(r,g,b));
         }
         else
           sz[i] = 0; // Out of screen, die.

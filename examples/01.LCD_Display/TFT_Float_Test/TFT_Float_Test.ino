@@ -30,17 +30,14 @@ BR_DATUM  8 //Bottom right
  */
 
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
+#include <Afantor.h>
 
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
 
 unsigned long drawTime = 0;
 
 void setup(void) {
   Serial.begin(115200);
-  tft.init();
-  tft.setRotation(1);
+  AF.begin();
 
 }
 
@@ -48,48 +45,48 @@ void loop() {
 
   char tmp[12];
   
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
+  AF.LCD.setTextColor(TFT_WHITE, TFT_BLACK);
   
   // Datum is middle centre
-  tft.setTextDatum(MC_DATUM);
+  AF.LCD.setTextDatum(MC_DATUM);
 
   // Test floating point drawing function:
   // drawFloat(value, precision, x, y, font);
   
   float test = 67.125;
-  tft.drawFloat(test, 4, 160, 120, 6);
-    tft.drawString(dtostrf(test,4,4,tmp), 100, 200, 6);
+  AF.LCD.drawFloat(test, 4, 160, 120, 6);
+    AF.LCD.drawString(dtostrf(test,4,4,tmp), 100, 200, 6);
 
   delay(1000);
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
   
   test = -0.555555;
-  tft.drawFloat(test, 3, 160, 120, 6);
-    tft.drawString(dtostrf(test,2,2,tmp), 100, 200, 6);
+  AF.LCD.drawFloat(test, 3, 160, 120, 6);
+    AF.LCD.drawString(dtostrf(test,2,2,tmp), 100, 200, 6);
 
   delay(1000);
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
   
   test = 0.123;
-  tft.drawFloat(test, 4, 160, 120, 6);
+  AF.LCD.drawFloat(test, 4, 160, 120, 6);
 
-  tft.drawString(dtostrf(test,4,4,tmp), 100, 200, 6);
+  AF.LCD.drawString(dtostrf(test,4,4,tmp), 100, 200, 6);
 
   delay(1000);
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
 
   // This does not work at the moment....
   test = 9999999;
-  tft.drawFloat(test, 0, 160, 120, 6);
-  tft.drawString(dtostrf(test,4,4,tmp), 100, 200, 6);
+  AF.LCD.drawFloat(test, 0, 160, 120, 6);
+  AF.LCD.drawString(dtostrf(test,4,4,tmp), 100, 200, 6);
   delay(1000);
 
   //Plot the datum for the last number
-  tft.fillCircle(160,120,5,TFT_RED);
-  tft.setTextDatum(MC_DATUM);
-  tft.setTextColor(TFT_BLACK);
-  tft.drawString("X", 160, 120, 2);
+  AF.LCD.fillCircle(160,120,5,TFT_RED);
+  AF.LCD.setTextDatum(MC_DATUM);
+  AF.LCD.setTextColor(TFT_BLACK);
+  AF.LCD.drawString("X", 160, 120, 2);
  
   delay(4000);
 }

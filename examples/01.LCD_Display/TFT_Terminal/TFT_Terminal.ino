@@ -23,10 +23,7 @@
   redistribution
  *************************************************************/
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 // The scrolling area must be a integral multiple of TEXT_HEIGHT
 #define TEXT_HEIGHT 16 // Height of text to be printed and scrolled
@@ -58,19 +55,18 @@ int blank[19]; // We keep all the strings pixel lengths to optimise the speed of
 
 void setup() {
   // Setup the TFT display
-  tft.init();
-  tft.setRotation(1); // Must be setRotation(0) for this sketch to work correctly
-  tft.fillScreen(TFT_BLACK);
+  AF.begin();
+  AF.LCD.fillScreen(TFT_BLACK);
   
   // Setup baud rate and draw top banner
   Serial.begin(9600);
   
-  tft.setTextColor(TFT_WHITE, TFT_BLUE);
-  tft.fillRect(0,0,240,16, TFT_BLUE);
-  tft.drawCentreString(" Serial Terminal - 9600 baud ",120,0,2);
+  AF.LCD.setTextColor(TFT_WHITE, TFT_BLUE);
+  AF.LCD.fillRect(0,0,240,16, TFT_BLUE);
+  AF.LCD.drawCentreString(" Serial Terminal - 9600 baud ",120,0,2);
 
   // Change colour for scrolling zone text
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  AF.LCD.setTextColor(TFT_WHITE, TFT_BLACK);
 
   // Setup scroll area
   setupScrollArea(TOP_FIXED_AREA, BOT_FIXED_AREA);
@@ -87,8 +83,8 @@ void loop(void) {
   //
   //  if (change_colour){
   //  change_colour = 0;
-  //  if (selected == 1) {tft.setTextColor(TFT_CYAN, TFT_BLACK); selected = 0;}
-  //  else {tft.setTextColor(TFT_MAGENTA, TFT_BLACK); selected = 1;}
+  //  if (selected == 1) {AF.LCD.setTextColor(TFT_CYAN, TFT_BLACK); selected = 0;}
+  //  else {AF.LCD.setTextColor(TFT_MAGENTA, TFT_BLACK); selected = 1;}
   //}
 
   while (Serial.available()) {
@@ -99,7 +95,7 @@ void loop(void) {
       yDraw = scroll_line(); // It can take 13ms to scroll and blank 16 pixel lines
     }
     if (data > 31 && data < 128) {
-      xPos += tft.drawChar(data,xPos,yDraw,2);
+      xPos += AF.LCD.drawChar(data,xPos,yDraw,2);
       blank[(18+(yStart-TOP_FIXED_AREA)/TEXT_HEIGHT)%19]=xPos; // Keep a record of line lengths
     }
     //change_colour = 1; // Line to indicate buffer is being emptied
@@ -112,7 +108,7 @@ void loop(void) {
 int scroll_line() {
   int yTemp = yStart; // Store the old yStart, this is where we draw the next line
   // Use the record of line lengths to optimise the rectangle size we need to erase the top line
-  tft.fillRect(0,yStart,blank[(yStart-TOP_FIXED_AREA)/TEXT_HEIGHT],TEXT_HEIGHT, TFT_BLACK);
+  AF.LCD.fillRect(0,yStart,blank[(yStart-TOP_FIXED_AREA)/TEXT_HEIGHT],TEXT_HEIGHT, TFT_BLACK);
 
   // Change the top of the scroll area
   yStart+=TEXT_HEIGHT;
@@ -128,21 +124,21 @@ int scroll_line() {
 // ##############################################################################################
 // We are using a hardware feature of the display, so we can only scroll in portrait orientation
 void setupScrollArea(uint16_t tfa, uint16_t bfa) {
-  tft.writecommand(ILI9341_VSCRDEF); // Vertical scroll definition
-  tft.writedata(tfa >> 8);           // Top Fixed Area line count
-  tft.writedata(tfa);
-  tft.writedata((YMAX-tfa-bfa)>>8);  // Vertical Scrolling Area line count
-  tft.writedata(YMAX-tfa-bfa);
-  tft.writedata(bfa >> 8);           // Bottom Fixed Area line count
-  tft.writedata(bfa);
+  AF.LCD.writecommand(ILI9341_VSCRDEF); // Vertical scroll definition
+  AF.LCD.writedata(tfa >> 8);           // Top Fixed Area line count
+  AF.LCD.writedata(tfa);
+  AF.LCD.writedata((YMAX-tfa-bfa)>>8);  // Vertical Scrolling Area line count
+  AF.LCD.writedata(YMAX-tfa-bfa);
+  AF.LCD.writedata(bfa >> 8);           // Bottom Fixed Area line count
+  AF.LCD.writedata(bfa);
 }
 
 // ##############################################################################################
 // Setup the vertical scrolling start address pointer
 // ##############################################################################################
 void scrollAddress(uint16_t vsp) {
-  tft.writecommand(ILI9341_VSCRSADD); // Vertical scrolling pointer
-  tft.writedata(vsp>>8);
-  tft.writedata(vsp);
+  AF.LCD.writecommand(ILI9341_VSCRSADD); // Vertical scrolling pointer
+  AF.LCD.writedata(vsp>>8);
+  AF.LCD.writedata(vsp);
 }
 

@@ -10,10 +10,7 @@
 #define WHITE 0xFFFF
 #define GREY  0x5AEB
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 int16_t h = 240;
 int16_t w = 320;
@@ -61,16 +58,14 @@ void setup(void) {
   
   //randomSeed(analogRead(0)*analogRead(1));
    
-  tft.init();
+  AF.begin();
 
-  tft.setRotation(1);
-
-  tft.fillScreen(BLACK);
-  //tft.fillScreen(GREY);
+  AF.LCD.fillScreen(BLACK);
+  //AF.LCD.fillScreen(GREY);
   
   initgame();
 
-  tft.setTextColor(WHITE, BLACK);
+  AF.LCD.setTextColor(WHITE, BLACK);
   
 }
 
@@ -96,11 +91,11 @@ void initgame() {
 
   midline();
 
-  tft.fillRect(0,h-26,w,239,GREY);
+  AF.LCD.fillRect(0,h-26,w,239,GREY);
 
-  tft.setTextDatum(TC_DATUM);
-  tft.setTextColor(WHITE,GREY);
-  tft.drawString("TFT_eSPI example", w/2, h-26 , 4);
+  AF.LCD.setTextDatum(TC_DATUM);
+  AF.LCD.setTextColor(WHITE,GREY);
+  AF.LCD.drawString("TFT_eSPI example", w/2, h-26 , 4);
 }
 
 void midline() {
@@ -109,21 +104,21 @@ void midline() {
   if ((ball_x<dashline_x-ball_w) && (ball_x > dashline_x+dashline_w)) return;
 
   // Quick way to draw a dashed line
-  tft.setWindow(dashline_x,0,dashline_x+dashline_w-1,h);
+  AF.LCD.setWindow(dashline_x,0,dashline_x+dashline_w-1,h);
   
   for(int16_t i = 0; i < dashline_n; i+=2) {
-    tft.pushColor(WHITE, dashline_w*dashline_h); // push dash pixels
-    tft.pushColor(BLACK, dashline_w*dashline_h); // push gap pixels
+    AF.LCD.pushColor(WHITE, dashline_w*dashline_h); // push dash pixels
+    AF.LCD.pushColor(BLACK, dashline_w*dashline_h); // push gap pixels
   }
 }
 
 void lpaddle() {
   
   if (lpaddle_d == 1) {
-    tft.fillRect(lpaddle_x, lpaddle_y, paddle_w, 1, BLACK);
+    AF.LCD.fillRect(lpaddle_x, lpaddle_y, paddle_w, 1, BLACK);
   } 
   else if (lpaddle_d == -1) {
-    tft.fillRect(lpaddle_x, lpaddle_y + paddle_h - 1, paddle_w, 1, BLACK);
+    AF.LCD.fillRect(lpaddle_x, lpaddle_y + paddle_h - 1, paddle_w, 1, BLACK);
   }
 
   lpaddle_y = lpaddle_y + lpaddle_d;
@@ -138,16 +133,16 @@ void lpaddle() {
   if (lpaddle_y + paddle_h >= h && lpaddle_d == 1) lpaddle_d = 0;
   else if (lpaddle_y <= 0 && lpaddle_d == -1) lpaddle_d = 0;
 
-  tft.fillRect(lpaddle_x, lpaddle_y, paddle_w, paddle_h, WHITE);
+  AF.LCD.fillRect(lpaddle_x, lpaddle_y, paddle_w, paddle_h, WHITE);
 }
 
 void rpaddle() {
   
   if (rpaddle_d == 1) {
-    tft.fillRect(rpaddle_x, rpaddle_y, paddle_w, 1, BLACK);
+    AF.LCD.fillRect(rpaddle_x, rpaddle_y, paddle_w, 1, BLACK);
   } 
   else if (rpaddle_d == -1) {
-    tft.fillRect(rpaddle_x, rpaddle_y + paddle_h - 1, paddle_w, 1, BLACK);
+    AF.LCD.fillRect(rpaddle_x, rpaddle_y + paddle_h - 1, paddle_w, 1, BLACK);
   }
 
   rpaddle_y = rpaddle_y + rpaddle_d;
@@ -162,7 +157,7 @@ void rpaddle() {
   if (rpaddle_y + paddle_h >= h && rpaddle_d == 1) rpaddle_d = 0;
   else if (rpaddle_y <= 0 && rpaddle_d == -1) rpaddle_d = 0;
 
-  tft.fillRect(rpaddle_x, rpaddle_y, paddle_w, paddle_h, WHITE);
+  AF.LCD.fillRect(rpaddle_x, rpaddle_y, paddle_w, paddle_h, WHITE);
 }
 
 void calc_target_y() {
@@ -210,9 +205,9 @@ void ball() {
     ball_y += ball_dy; // Keep in bounds
   }
 
-  //tft.fillRect(oldball_x, oldball_y, ball_w, ball_h, BLACK);
-  tft.drawRect(oldball_x, oldball_y, ball_w, ball_h, BLACK); // Less TFT refresh aliasing than line above for large balls
-  tft.fillRect(   ball_x,    ball_y, ball_w, ball_h, WHITE);
+  //AF.LCD.fillRect(oldball_x, oldball_y, ball_w, ball_h, BLACK);
+  AF.LCD.drawRect(oldball_x, oldball_y, ball_w, ball_h, BLACK); // Less TFT refresh aliasing than line above for large balls
+  AF.LCD.fillRect(   ball_x,    ball_y, ball_w, ball_h, WHITE);
   oldball_x = ball_x;
   oldball_y = ball_y;
 }

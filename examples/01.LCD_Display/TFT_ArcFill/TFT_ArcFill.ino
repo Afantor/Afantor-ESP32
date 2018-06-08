@@ -1,8 +1,6 @@
 // Demo using arcFill to draw ellipses and a segmented elipse
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
 
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 #define DEG2RAD 0.0174532925
 
@@ -17,11 +15,10 @@ byte blue = 0; // Blue is the bottom 5 bits
 byte state = 0;
 
 void setup(void) {
-  tft.begin();
+  
+  AF.begin();
 
-  tft.setRotation(1);
-
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
 
 }
 
@@ -84,8 +81,8 @@ int fillArc(int x, int y, int start_angle, int seg_count, int rx, int ry, int w,
     int x3 = sx2 * rx + x;
     int y3 = sy2 * ry + y;
 
-    tft.fillTriangle(x0, y0, x1, y1, x2, y2, colour);
-    tft.fillTriangle(x1, y1, x2, y2, x3, y3, colour);
+    AF.LCD.fillTriangle(x0, y0, x1, y1, x2, y2, colour);
+    AF.LCD.fillTriangle(x1, y1, x2, y2, x3, y3, colour);
 
     // Copy segment end to sgement start for next segment
     x0 = x2;

@@ -12,12 +12,7 @@
  #########################################################################
  */
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI();                   // Invoke custom library with default width and height
-
-//TFT_eSPI tft = TFT_eSPI(240, 320);       // Could invoke custom library declaring width and height
+#include <Afantor.h>
 
 unsigned long targetTime = 0;
 byte red = 31;
@@ -28,9 +23,9 @@ unsigned int colour = red << 11; // Colour order is RGB 5+6+5 bits each
 
 void setup(void) {
   Serial.begin(9600);
-  tft.init();
-  tft.setRotation(0);
-  tft.fillScreen(TFT_BLACK);
+  AF.begin();
+  AF.LCD.setRotation(0);
+  AF.LCD.fillScreen(TFT_BLACK);
 
   targetTime = millis() + 1000;
 }
@@ -43,22 +38,22 @@ void loop() {
     rainbow_fill(); // Fill the screen with rainbow colours
 
     // The standard AdaFruit font still works as before
-    tft.setTextColor(TFT_BLACK); // Background is not defined so it is transparent
+    AF.LCD.setTextColor(TFT_BLACK); // Background is not defined so it is transparent
  
-    tft.setCursor (60, 5);
-    tft.setTextFont(0);        // Select font 0 which is the Adafruit font
-    tft.print("Original Adafruit font!");
+    AF.LCD.setCursor (60, 5);
+    AF.LCD.setTextFont(0);        // Select font 0 which is the Adafruit font
+    AF.LCD.print("Original Adafruit font!");
 
-    //tft.drawString("Original Adafruit font!",60,5,1); 
+    //AF.LCD.drawString("Original Adafruit font!",60,5,1); 
 
     // The new larger fonts do not need to use the .setCursor call, coords are embedded
-    tft.setTextColor(TFT_BLACK); // Do not plot the background colour
+    AF.LCD.setTextColor(TFT_BLACK); // Do not plot the background colour
     // Overlay the black text on top of the rainbow plot (the advantage of not drawing the backgorund colour!)
-    tft.drawCentreString("Font size 2", 120, 14, 2); // Draw text centre at position 120, 14 using font 2
-    tft.drawCentreString("Font size 4", 120, 30, 4); // Draw text centre at position 120, 30 using font 4
-    tft.drawCentreString("12.34", 120, 54, 6);       // Draw text centre at position 120, 54 using font 6
+    AF.LCD.drawCentreString("Font size 2", 120, 14, 2); // Draw text centre at position 120, 14 using font 2
+    AF.LCD.drawCentreString("Font size 4", 120, 30, 4); // Draw text centre at position 120, 30 using font 4
+    AF.LCD.drawCentreString("12.34", 120, 54, 6);       // Draw text centre at position 120, 54 using font 6
 
-    tft.drawCentreString("12.34 is in font size 6", 120, 92, 2); // Draw text centre at position 120, 92 using font 2
+    AF.LCD.drawCentreString("12.34 is in font size 6", 120, 92, 2); // Draw text centre at position 120, 92 using font 2
     // Note the x position is the top of the font!
 
     // draw a floating point number
@@ -67,31 +62,31 @@ void loop() {
     int xpos = 90;      // x position
     int ypos = 110;     // y position
     int font = 2;       // font number 2
-    xpos += tft.drawFloat(pi, precision, xpos, ypos, font); // Draw rounded number and return new xpos delta for next print position
-    tft.drawString(" is pi", xpos, ypos, font);             // Continue printing from new x position
+    xpos += AF.LCD.drawFloat(pi, precision, xpos, ypos, font); // Draw rounded number and return new xpos delta for next print position
+    AF.LCD.drawString(" is pi", xpos, ypos, font);             // Continue printing from new x position
 
-    tft.setTextSize(1);           // We are using a size multiplier of 1
+    AF.LCD.setTextSize(1);           // We are using a size multiplier of 1
 
-    tft.setTextColor(TFT_BLACK);  // Set text colour to black, no background (so transparent)
+    AF.LCD.setTextColor(TFT_BLACK);  // Set text colour to black, no background (so transparent)
 
-    tft.setCursor(36, 150, 4);    // Set cursor to x = 36, y = 150 and use font 4
-    tft.println("Transparent...");  // As we use println, the cursor moves to the next line
+    AF.LCD.setCursor(36, 150, 4);    // Set cursor to x = 36, y = 150 and use font 4
+    AF.LCD.println("Transparent...");  // As we use println, the cursor moves to the next line
 
-    tft.setCursor(30, 175);    // Set cursor to x = 30, y = 175
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);  // Set text colour to white and background to black
-    tft.println("White on black");
+    AF.LCD.setCursor(30, 175);    // Set cursor to x = 30, y = 175
+    AF.LCD.setTextColor(TFT_WHITE, TFT_BLACK);  // Set text colour to white and background to black
+    AF.LCD.println("White on black");
 
-    tft.setTextFont(4);        // Select font 4 without moving cursor
-    tft.setCursor(50, 210);    // Set cursor to x = 50, y = 210 without changing the font
-    tft.setTextColor(TFT_WHITE);
+    AF.LCD.setTextFont(4);        // Select font 4 without moving cursor
+    AF.LCD.setCursor(50, 210);    // Set cursor to x = 50, y = 210 without changing the font
+    AF.LCD.setTextColor(TFT_WHITE);
     // By using #TFT print we can use all the formatting features like printing HEX
-    tft.print(57005, HEX);    // Cursor does no move to next line
-    tft.println(48879, HEX);  // print and move cursor to next line
+    AF.LCD.print(57005, HEX);    // Cursor does no move to next line
+    AF.LCD.println(48879, HEX);  // print and move cursor to next line
 
-    tft.setTextColor(TFT_GREEN, TFT_BLACK); // This time we will use green text on a black background
-    tft.setTextFont(2); // Select font 2
+    AF.LCD.setTextColor(TFT_GREEN, TFT_BLACK); // This time we will use green text on a black background
+    AF.LCD.setTextFont(2); // Select font 2
     //Text will wrap to the next line if needed, by luck it breaks the lines at spaces!
-    tft.println(" Ode to a Small Lump of Green Putty I Found in My Armpit One Midsummer Morning ");
+    AF.LCD.println(" Ode to a Small Lump of Green Putty I Found in My Armpit One Midsummer Morning ");
   }
 }
 
@@ -102,7 +97,7 @@ void rainbow_fill()
   
   for (int i = 319; i > 0; i--) {
     // Draw a vertical line 1 pixel wide in the selected colour
-    tft.drawFastHLine(0, i, tft.width(), colour); // in this example tft.width() returns the pixel width of the display
+    AF.LCD.drawFastHLine(0, i, AF.LCD.width(), colour); // in this example AF.LCD.width() returns the pixel width of the display
     // This is a "state machine" that ramps up/down the colour brightnesses in sequence
     switch (state) {
       case 0:

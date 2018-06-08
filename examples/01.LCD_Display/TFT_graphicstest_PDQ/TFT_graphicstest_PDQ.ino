@@ -13,11 +13,8 @@
  #########################################################################
  */
 
-#include "SPI.h"
-#include "TFT_eSPI.h"
+#include <Afantor.h>
 
-// Use hardware SPI
-TFT_eSPI tft = TFT_eSPI();
 
 unsigned long total = 0;
 unsigned long tn = 0;
@@ -27,7 +24,7 @@ void setup() {
   Serial.println(""); Serial.println("");
   Serial.println("Bodmer's TFT_eSPI library Test!"); 
  
-  tft.init();
+  AF.begin();
 }
 
 void loop(void)
@@ -109,109 +106,109 @@ void loop(void)
 
 	uint16_t c = 4;
 	int8_t d = 1;
-	for (int32_t i = 0; i < tft.height(); i++)
+	for (int32_t i = 0; i < AF.LCD.height(); i++)
 	{
-		tft.drawFastHLine(0, i, tft.width(), c);
+		AF.LCD.drawFastHLine(0, i, AF.LCD.width(), c);
 		c += d;
 		if (c <= 4 || c >= 11)
 			d = -d;
 	}
 	
-	tft.setCursor(0, 0);
-	tft.setTextColor(TFT_MAGENTA);
-	tft.setTextSize(2);
+	AF.LCD.setCursor(0, 0);
+	AF.LCD.setTextColor(TFT_MAGENTA);
+	AF.LCD.setTextSize(2);
 
- 	tft.println(F("   TFT_eSPI test"));
+ 	AF.LCD.println(F("   TFT_eSPI test"));
 
-	tft.setTextSize(1);
-	tft.setTextColor(TFT_WHITE);
-	tft.println(F(""));
-	tft.setTextSize(1);
-	tft.println(F(""));
-	tft.setTextColor(tft.color565(0x80, 0x80, 0x80));
+	AF.LCD.setTextSize(1);
+	AF.LCD.setTextColor(TFT_WHITE);
+	AF.LCD.println(F(""));
+	AF.LCD.setTextSize(1);
+	AF.LCD.println(F(""));
+	AF.LCD.setTextColor(AF.LCD.color565(0x80, 0x80, 0x80));
 
-	tft.println(F(""));
+	AF.LCD.println(F(""));
 
 
-	tft.setTextColor(TFT_GREEN);
-	tft.println(F(" Benchmark               microseconds"));
-	tft.println(F(""));
-	tft.setTextColor(TFT_YELLOW);
+	AF.LCD.setTextColor(TFT_GREEN);
+	AF.LCD.println(F(" Benchmark               microseconds"));
+	AF.LCD.println(F(""));
+	AF.LCD.setTextColor(TFT_YELLOW);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("HaD pushColor      "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("HaD pushColor      "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecHaD);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Screen fill        "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Screen fill        "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecFillScreen);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Text               "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Text               "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecText);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Pixels             "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Pixels             "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecPixels);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Lines              "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Lines              "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecLines);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Horiz/Vert Lines   "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Horiz/Vert Lines   "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecFastLines);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Rectangles         "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Rectangles         "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecRects);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Rectangles-filled  "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Rectangles-filled  "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecFilledRects);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Circles            "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Circles            "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecCircles);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Circles-filled     "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Circles-filled     "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecFilledCircles);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Triangles          "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Triangles          "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecTriangles);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Triangles-filled   "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Triangles-filled   "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecFilledTrangles);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Rounded rects      "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Rounded rects      "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usecRoundRects);
 
-	tft.setTextColor(TFT_CYAN); tft.setTextSize(1);
-	tft.print(F("Rounded rects-fill "));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
+	AF.LCD.setTextColor(TFT_CYAN); AF.LCD.setTextSize(1);
+	AF.LCD.print(F("Rounded rects-fill "));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
 	printnice(usedFilledRoundRects);
 
-	tft.setTextSize(1);
-	tft.println(F(""));
-	tft.setTextColor(TFT_GREEN); tft.setTextSize(2);
-	tft.print(F("Benchmark Complete!"));
+	AF.LCD.setTextSize(1);
+	AF.LCD.println(F(""));
+	AF.LCD.setTextColor(TFT_GREEN); AF.LCD.setTextSize(2);
+	AF.LCD.print(F("Benchmark Complete!"));
 
 	delay(60 * 1000L);
 }
@@ -231,7 +228,7 @@ void printnice(int32_t v)
 		memmove(str+1, str, strlen(str)+1);
 		*str = ' ';
 	}
-	tft.println(str);
+	AF.LCD.println(str);
 }
 
 static inline uint32_t micros_start() __attribute__ ((always_inline));
@@ -333,16 +330,16 @@ uint32_t testHaD()
 		0x45, 0x04, 0x80, 0x9d, 0x04, 0xb9, 0x56, 
 	};
 	
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	uint32_t start = micros_start();
 	
 	for (int i = 0; i < 0x10; i++)
 	{
-		tft.setWindow(0, 0, 240-1, 320-1);
+		AF.LCD.setWindow(0, 0, 240-1, 320-1);
 
 		uint16_t cnt = 0;
-		uint16_t color = tft.color565((i << 4) | i, (i << 4) | i, (i << 4) | i);
+		uint16_t color = AF.LCD.color565((i << 4) | i, (i << 4) | i, (i << 4) | i);
 		uint16_t curcolor = 0;
 
 		const uint8_t *cmp = &HaD_240x320[0];
@@ -351,19 +348,19 @@ uint32_t testHaD()
 		{
 			cnt = pgm_read_byte(cmp++);
 			if (cnt & 0x80) cnt = ((cnt & 0x7f) << 8) | pgm_read_byte(cmp++);
-			tft.pushColor(curcolor, cnt);	// PDQ_GFX has count
+			AF.LCD.pushColor(curcolor, cnt);	// PDQ_GFX has count
 			curcolor ^= color;
 		}
 	}
 
 	uint32_t t = micros() - start;
 
-	tft.setTextColor(TFT_YELLOW);
-	tft.setTextSize(2);
-	tft.setCursor(8, 285);
-	tft.print(F("http://hackaday.io/"));
-	tft.setCursor(96, 302);
-	tft.print(F("Xark"));
+	AF.LCD.setTextColor(TFT_YELLOW);
+	AF.LCD.setTextSize(2);
+	AF.LCD.setCursor(8, 285);
+	AF.LCD.print(F("http://hackaday.io/"));
+	AF.LCD.setCursor(96, 302);
+	AF.LCD.print(F("Xark"));
 
 	delay(3 * 1000L);
 	
@@ -374,53 +371,53 @@ uint32_t testFillScreen()
 {
 	uint32_t start = micros_start();
     // Shortened this tedious test!
-		tft.fillScreen(TFT_WHITE);
-		tft.fillScreen(TFT_RED);
-		tft.fillScreen(TFT_GREEN);
-		tft.fillScreen(TFT_BLUE);
-		tft.fillScreen(TFT_BLACK);
+		AF.LCD.fillScreen(TFT_WHITE);
+		AF.LCD.fillScreen(TFT_RED);
+		AF.LCD.fillScreen(TFT_GREEN);
+		AF.LCD.fillScreen(TFT_BLUE);
+		AF.LCD.fillScreen(TFT_BLACK);
 
 	return (micros() - start)/5;
 }
 
 uint32_t testText()
 {
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 	uint32_t start = micros_start();
-	tft.setCursor(0, 0);
-	tft.setTextColor(TFT_WHITE,TFT_BLACK);	tft.setTextSize(1);
-	tft.println(F("Hello World!"));
-	tft.setTextSize(2);
-	tft.setTextColor(tft.color565(0xff, 0x00, 0x00));
-	tft.print(F("RED "));
-	tft.setTextColor(tft.color565(0x00, 0xff, 0x00));
-	tft.print(F("GREEN "));
-	tft.setTextColor(tft.color565(0x00, 0x00, 0xff));
-	tft.println(F("BLUE"));
-	tft.setTextColor(TFT_YELLOW); tft.setTextSize(2);
-	tft.println(1234.56);
-	tft.setTextColor(TFT_RED);		tft.setTextSize(3);
-	tft.println(0xDEADBEEF, HEX);
-	tft.println();
-	tft.setTextColor(TFT_GREEN);
-	tft.setTextSize(5);
-	tft.println(F("Groop"));
-	tft.setTextSize(2);
-	tft.println(F("I implore thee,"));
-  tft.setTextColor(TFT_GREEN);
-	tft.setTextSize(1);
-	tft.println(F("my foonting turlingdromes."));
-	tft.println(F("And hooptiously drangle me"));
-	tft.println(F("with crinkly bindlewurdles,"));
-	tft.println(F("Or I will rend thee"));
-	tft.println(F("in the gobberwarts"));
-	tft.println(F("with my blurglecruncheon,"));
-	tft.println(F("see if I don't!"));
-	tft.println(F(""));
-	tft.println(F(""));
-	tft.setTextColor(TFT_MAGENTA);
-	tft.setTextSize(6);
-	tft.println(F("Woot!"));
+	AF.LCD.setCursor(0, 0);
+	AF.LCD.setTextColor(TFT_WHITE,TFT_BLACK);	AF.LCD.setTextSize(1);
+	AF.LCD.println(F("Hello World!"));
+	AF.LCD.setTextSize(2);
+	AF.LCD.setTextColor(AF.LCD.color565(0xff, 0x00, 0x00));
+	AF.LCD.print(F("RED "));
+	AF.LCD.setTextColor(AF.LCD.color565(0x00, 0xff, 0x00));
+	AF.LCD.print(F("GREEN "));
+	AF.LCD.setTextColor(AF.LCD.color565(0x00, 0x00, 0xff));
+	AF.LCD.println(F("BLUE"));
+	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
+	AF.LCD.println(1234.56);
+	AF.LCD.setTextColor(TFT_RED);		AF.LCD.setTextSize(3);
+	AF.LCD.println(0xDEADBEEF, HEX);
+	AF.LCD.println();
+	AF.LCD.setTextColor(TFT_GREEN);
+	AF.LCD.setTextSize(5);
+	AF.LCD.println(F("Groop"));
+	AF.LCD.setTextSize(2);
+	AF.LCD.println(F("I implore thee,"));
+  AF.LCD.setTextColor(TFT_GREEN);
+	AF.LCD.setTextSize(1);
+	AF.LCD.println(F("my foonting turlingdromes."));
+	AF.LCD.println(F("And hooptiously drangle me"));
+	AF.LCD.println(F("with crinkly bindlewurdles,"));
+	AF.LCD.println(F("Or I will rend thee"));
+	AF.LCD.println(F("in the gobberwarts"));
+	AF.LCD.println(F("with my blurglecruncheon,"));
+	AF.LCD.println(F("see if I don't!"));
+	AF.LCD.println(F(""));
+	AF.LCD.println(F(""));
+	AF.LCD.setTextColor(TFT_MAGENTA);
+	AF.LCD.setTextSize(6);
+	AF.LCD.println(F("Woot!"));
 	uint32_t t = micros() - start;
 	delay(1000);
 	return t;
@@ -428,8 +425,8 @@ uint32_t testText()
 
 uint32_t testPixels()
 {
-	int32_t	w = tft.width();
-	int32_t	h = tft.height();
+	int32_t	w = AF.LCD.width();
+	int32_t	h = AF.LCD.height();
 
 	uint32_t start = micros_start();
 
@@ -437,7 +434,7 @@ uint32_t testPixels()
 	{
 		for (uint16_t x = 0; x < w; x++)
 		{
-			tft.drawPixel(x, y, tft.color565(x<<3, y<<3, x*y));
+			AF.LCD.drawPixel(x, y, AF.LCD.color565(x<<3, y<<3, x*y));
 		}
 	}
 	
@@ -449,10 +446,10 @@ uint32_t testLines(uint16_t color)
 {
 	uint32_t start, t;
 	int32_t	x1, y1, x2, y2;
-	int32_t	w = tft.width();
-	int32_t	h = tft.height();
+	int32_t	w = AF.LCD.width();
+	int32_t	h = AF.LCD.height();
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	x1 = y1 = 0;
 	y2 = h - 1;
@@ -461,19 +458,19 @@ uint32_t testLines(uint16_t color)
 
 	for (x2 = 0; x2 < w; x2 += 6)
 	{
-		tft.drawLine(x1, y1, x2, y2, color);
+		AF.LCD.drawLine(x1, y1, x2, y2, color);
 	}
 
 	x2 = w - 1;
 
 	for (y2 = 0; y2 < h; y2 += 6)
 	{
-		tft.drawLine(x1, y1, x2, y2, color);
+		AF.LCD.drawLine(x1, y1, x2, y2, color);
 	}
 
 	t = micros() - start; // fillScreen doesn't count against timing
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	x1 = w - 1;
 	y1 = 0;
@@ -483,18 +480,18 @@ uint32_t testLines(uint16_t color)
 
 	for (x2 = 0; x2 < w; x2 += 6)
 	{
-		tft.drawLine(x1, y1, x2, y2, color);
+		AF.LCD.drawLine(x1, y1, x2, y2, color);
 	}
 
 	x2 = 0;
 	for (y2 = 0; y2 < h; y2 += 6)
 	{
-		tft.drawLine(x1, y1, x2, y2, color);
+		AF.LCD.drawLine(x1, y1, x2, y2, color);
 	}
 
 	t += micros() - start;
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	x1 = 0;
 	y1 = h - 1;
@@ -504,16 +501,16 @@ uint32_t testLines(uint16_t color)
 
 	for (x2 = 0; x2 < w; x2 += 6)
 	{
-		tft.drawLine(x1, y1, x2, y2, color);
+		AF.LCD.drawLine(x1, y1, x2, y2, color);
 	}
 	x2 = w - 1;
 	for (y2 = 0; y2 < h; y2 += 6)
 	{
-		tft.drawLine(x1, y1, x2, y2, color);
+		AF.LCD.drawLine(x1, y1, x2, y2, color);
 	}
 	t += micros() - start;
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	x1 = w - 1;
 	y1 = h - 1;
@@ -523,13 +520,13 @@ uint32_t testLines(uint16_t color)
 
 	for (x2 = 0; x2 < w; x2 += 6)
 	{
-		tft.drawLine(x1, y1, x2, y2, color);
+		AF.LCD.drawLine(x1, y1, x2, y2, color);
 	}
 
 	x2 = 0;
 	for (y2 = 0; y2 < h; y2 += 6)
 	{
-		tft.drawLine(x1, y1, x2, y2, color);
+		AF.LCD.drawLine(x1, y1, x2, y2, color);
 	}
 
 	t += micros() - start;
@@ -541,17 +538,17 @@ uint32_t testFastLines(uint16_t color1, uint16_t color2)
 {
 	uint32_t start;
 	int32_t x, y;
-	int32_t w = tft.width();
-	int32_t h = tft.height();
+	int32_t w = AF.LCD.width();
+	int32_t h = AF.LCD.height();
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	start = micros_start();
 
 	for (y = 0; y < h; y += 5)
-		tft.drawFastHLine(0, y, w, color1);
+		AF.LCD.drawFastHLine(0, y, w, color1);
 	for (x = 0; x < w; x += 5)
-		tft.drawFastVLine(x, 0, h, color2);
+		AF.LCD.drawFastVLine(x, 0, h, color2);
 
 	return micros() - start;
 }
@@ -560,16 +557,16 @@ uint32_t testRects(uint16_t color)
 {
 	uint32_t start;
 	int32_t n, i, i2;
-	int32_t cx = tft.width() / 2;
-	int32_t cy = tft.height() / 2;
+	int32_t cx = AF.LCD.width() / 2;
+	int32_t cy = AF.LCD.height() / 2;
 
-	tft.fillScreen(TFT_BLACK);
-	n = min(tft.width(), tft.height());
+	AF.LCD.fillScreen(TFT_BLACK);
+	n = min(AF.LCD.width(), AF.LCD.height());
 	start = micros_start();
 	for (i = 2; i < n; i += 6)
 	{
 		i2 = i / 2;
-		tft.drawRect(cx-i2, cy-i2, i, i, color);
+		AF.LCD.drawRect(cx-i2, cy-i2, i, i, color);
 	}
 
 	return micros() - start;
@@ -579,23 +576,23 @@ uint32_t testFilledRects(uint16_t color1, uint16_t color2)
 {
 	uint32_t start, t = 0;
 	int32_t n, i, i2;
-	int32_t cx = tft.width() / 2 - 1;
-	int32_t cy = tft.height() / 2 - 1;
+	int32_t cx = AF.LCD.width() / 2 - 1;
+	int32_t cy = AF.LCD.height() / 2 - 1;
 
-	tft.fillScreen(TFT_BLACK);
-	n = min(tft.width(), tft.height());
+	AF.LCD.fillScreen(TFT_BLACK);
+	n = min(AF.LCD.width(), AF.LCD.height());
 	for (i = n; i > 0; i -= 6)
 	{
 		i2 = i / 2;
 
 		start = micros_start();
 
-		tft.fillRect(cx-i2, cy-i2, i, i, color1);
+		AF.LCD.fillRect(cx-i2, cy-i2, i, i, color1);
 
 		t += micros() - start;
 
 		// Outlines are not included in timing results
-		tft.drawRect(cx-i2, cy-i2, i, i, color2);
+		AF.LCD.drawRect(cx-i2, cy-i2, i, i, color2);
 	}
 
 	return t;
@@ -604,9 +601,9 @@ uint32_t testFilledRects(uint16_t color1, uint16_t color2)
 uint32_t testFilledCircles(uint8_t radius, uint16_t color)
 {
 	uint32_t start;
-	int32_t x, y, w = tft.width(), h = tft.height(), r2 = radius * 2;
+	int32_t x, y, w = AF.LCD.width(), h = AF.LCD.height(), r2 = radius * 2;
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	start = micros_start();
 
@@ -614,7 +611,7 @@ uint32_t testFilledCircles(uint8_t radius, uint16_t color)
 	{
 		for (y = radius; y < h; y += r2)
 		{
-			tft.fillCircle(x, y, radius, color);
+			AF.LCD.fillCircle(x, y, radius, color);
 		}
 	}
 
@@ -625,8 +622,8 @@ uint32_t testCircles(uint8_t radius, uint16_t color)
 {
 	uint32_t start;
 	int32_t x, y, r2 = radius * 2;
-	int32_t w = tft.width() + radius;
-	int32_t h = tft.height() + radius;
+	int32_t w = AF.LCD.width() + radius;
+	int32_t h = AF.LCD.height() + radius;
 
 	// Screen is not cleared for this one -- this is
 	// intentional and does not affect the reported time.
@@ -636,7 +633,7 @@ uint32_t testCircles(uint8_t radius, uint16_t color)
 	{
 		for (y = 0; y < h; y += r2)
 		{
-			tft.drawCircle(x, y, radius, color);
+			AF.LCD.drawCircle(x, y, radius, color);
 		}
 	}
 
@@ -647,21 +644,21 @@ uint32_t testTriangles()
 {
 	uint32_t start;
 	int32_t n, i;
-	int32_t cx = tft.width()/ 2 - 1;
-	int32_t cy = tft.height() / 2 - 1;
+	int32_t cx = AF.LCD.width()/ 2 - 1;
+	int32_t cy = AF.LCD.height() / 2 - 1;
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 	n = min(cx, cy);
 
 	start = micros_start();
 
 	for (i = 0; i < n; i += 5)
 	{
-		tft.drawTriangle(
+		AF.LCD.drawTriangle(
 			cx		, cy - i, // peak
 			cx - i, cy + i, // bottom left
 			cx + i, cy + i, // bottom right
-			tft.color565(0, 0, i));
+			AF.LCD.color565(0, 0, i));
 	}
 
 	return micros() - start;
@@ -671,20 +668,20 @@ uint32_t testFilledTriangles()
 {
 	uint32_t start, t = 0;
 	int32_t i;
-	int32_t cx = tft.width() / 2 - 1;
-	int32_t cy = tft.height() / 2 - 1;
+	int32_t cx = AF.LCD.width() / 2 - 1;
+	int32_t cy = AF.LCD.height() / 2 - 1;
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	start = micros_start();
 
 	for (i = min(cx,cy); i > 10; i -= 5) {
 		start = micros_start();
-		tft.fillTriangle(cx, cy - i, cx - i, cy + i, cx + i, cy + i,
-			tft.color565(0, i, i));
+		AF.LCD.fillTriangle(cx, cy - i, cx - i, cy + i, cx + i, cy + i,
+			AF.LCD.color565(0, i, i));
 		t += micros() - start;
-		tft.drawTriangle(cx, cy - i, cx - i, cy + i, cx + i, cy + i,
-			tft.color565(i, i, 0));
+		AF.LCD.drawTriangle(cx, cy - i, cx - i, cy + i, cx + i, cy + i,
+			AF.LCD.color565(i, i, 0));
 	}
 
 	return t;
@@ -694,19 +691,19 @@ uint32_t testRoundRects()
  {
 	uint32_t start;
 	int32_t w, i, i2;
-	int32_t cx = tft.width() / 2 - 1;
-	int32_t cy = tft.height() / 2 - 1;
+	int32_t cx = AF.LCD.width() / 2 - 1;
+	int32_t cy = AF.LCD.height() / 2 - 1;
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 	
-	w = min(tft.width(), tft.height());
+	w = min(AF.LCD.width(), AF.LCD.height());
 	
 	start = micros_start();
 
 	for (i = 0; i < w; i += 6)
 	{
 		i2 = i / 2;
-		tft.drawRoundRect(cx-i2, cy-i2, i, i, i/8, tft.color565(i, 0, 0));
+		AF.LCD.drawRoundRect(cx-i2, cy-i2, i, i, i/8, AF.LCD.color565(i, 0, 0));
 	}
 
 	return micros() - start;
@@ -716,17 +713,17 @@ uint32_t testFilledRoundRects()
 {
 	uint32_t start;
 	int32_t i, i2;
-	int32_t cx = tft.width() / 2 - 1;
-	int32_t cy = tft.height() / 2 - 1;
+	int32_t cx = AF.LCD.width() / 2 - 1;
+	int32_t cy = AF.LCD.height() / 2 - 1;
 
-	tft.fillScreen(TFT_BLACK);
+	AF.LCD.fillScreen(TFT_BLACK);
 
 	start = micros_start();
 
-	for (i = min(tft.width(), tft.height()); i > 20; i -= 6)
+	for (i = min(AF.LCD.width(), AF.LCD.height()); i > 20; i -= 6)
 	{
 		i2 = i / 2;
-		tft.fillRoundRect(cx-i2, cy-i2, i, i, i/8, tft.color565(0, i, 0));
+		AF.LCD.fillRoundRect(cx-i2, cy-i2, i, i, i/8, AF.LCD.color565(0, i, 0));
 	}
 
 	return micros() - start;

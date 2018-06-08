@@ -1,10 +1,7 @@
 // Spiro
 // Rainbow patern generator
 
-#include <TFT_eSPI.h> // Hardware-specific library
-#include <SPI.h>
-
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 #define DEG2RAD 0.0174532925 // Convert angles in degrees to radians
 
@@ -18,15 +15,15 @@ void setup()
   //randomSeed(analogRead(A0));
 
   // Setup the LCD
-  tft.init();
-  tft.setRotation(1);
+  AF.begin();
+  
 }
 
 void loop()
 {
   runTime = millis();
 
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
   int n = random(2, 23), r = random(20, 100), colour = 0; //rainbow();
 
   for (long i = 0; i < (360 * n); i++) {
@@ -40,7 +37,7 @@ void loop()
     sx = sin(((i % 360) - 90) * DEG2RAD);
     x1 = sx * r + x0;
     yy1 = sy * r + yy0;
-    tft.drawPixel(x1, yy1, rainbow(map(i%360,0,360,0,127))); //colour);
+    AF.LCD.drawPixel(x1, yy1, rainbow(map(i%360,0,360,0,127))); //colour);
   }
   
   r = random(20, 100);//r = r / random(2,4);
@@ -55,7 +52,7 @@ void loop()
     sx = sin(((i % 360) - 90) * DEG2RAD);
     x1 = sx * r + x0;
     yy1 = sy * r + yy0;
-    tft.drawPixel(x1, yy1, rainbow(map(i%360,0,360,0,127))); //colour);
+    AF.LCD.drawPixel(x1, yy1, rainbow(map(i%360,0,360,0,127))); //colour);
   }
 
 

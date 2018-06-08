@@ -19,9 +19,7 @@
  #########################################################################
 */
 
-#include <TFT_eSPI.h> // Hardware-specific library
-
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <Afantor.h>
 
 // Include the header files that contain the icons
 #include "Alert.h"
@@ -33,10 +31,9 @@ long count = 0; // Loop count
 void setup()
 {
   Serial.begin(115200);
-  tft.begin();
-  tft.setRotation(1);	// landscape
+  AF.begin();
 
-  tft.fillScreen(TFT_BLACK);
+  AF.LCD.fillScreen(TFT_BLACK);
 
   // Draw the icons
   drawIcon(info, 100, 100, infoWidth, infoHeight);
@@ -51,16 +48,16 @@ void setup()
 void loop()
 {
   // Loop filling and clearing screen
-  drawIcon(info,  random(tft.width() -  infoWidth), random(tft.height() -  infoHeight),  infoWidth,  infoHeight);
-  drawIcon(alert, random(tft.width() - alertWidth), random(tft.height() - alertHeight), alertWidth, alertHeight);
-  drawIcon(closeX, random(tft.width() - closeWidth), random(tft.height() - closeHeight), alertWidth, closeHeight);
+  drawIcon(info,  random(AF.LCD.width() -  infoWidth), random(AF.LCD.height() -  infoHeight),  infoWidth,  infoHeight);
+  drawIcon(alert, random(AF.LCD.width() - alertWidth), random(AF.LCD.height() - alertHeight), alertWidth, alertHeight);
+  drawIcon(closeX, random(AF.LCD.width() - closeWidth), random(AF.LCD.height() - closeHeight), alertWidth, closeHeight);
 
   // Clear screen after 100 x 3 = 300 icons drawn
   if (100 == count++) {
     count = 1;
-    tft.setRotation(2 * random(2)); // Rotate randomly to clear display left>right or right>left to reduce monotony!
-    tft.fillScreen(TFT_BLACK);
-    tft.setRotation(1);
+    AF.LCD.setRotation(2 * random(2)); // Rotate randomly to clear display left>right or right>left to reduce monotony!
+    AF.LCD.fillScreen(TFT_BLACK);
+    AF.LCD.setRotation(1);
     //Serial.println(millis());
   }
 }
@@ -81,7 +78,7 @@ void drawIcon(const unsigned short* icon, int16_t x, int16_t y, uint16_t width, 
   uint16_t  pix_buffer[BUFF_SIZE];   // Pixel buffer (16 bits per pixel)
 
   // Set up a window the right size to stream pixels into
-  tft.setWindow(x, y, x + width - 1, y + height - 1);
+  AF.LCD.setWindow(x, y, x + width - 1, y + height - 1);
 
   // Work out the number whole buffers to send
   uint16_t nb = ((uint16_t)height * width) / BUFF_SIZE;
@@ -91,7 +88,7 @@ void drawIcon(const unsigned short* icon, int16_t x, int16_t y, uint16_t width, 
     for (int j = 0; j < BUFF_SIZE; j++) {
       pix_buffer[j] = pgm_read_word(&icon[i * BUFF_SIZE + j]);
     }
-    tft.pushColors(pix_buffer, BUFF_SIZE);
+    AF.LCD.pushColors(pix_buffer, BUFF_SIZE);
   }
 
   // Work out number of pixels not yet sent
@@ -100,7 +97,7 @@ void drawIcon(const unsigned short* icon, int16_t x, int16_t y, uint16_t width, 
   // Send any partial buffer left over
   if (np) {
     for (int i = 0; i < np; i++) pix_buffer[i] = pgm_read_word(&icon[nb * BUFF_SIZE + i]);
-    tft.pushColors(pix_buffer, np);
+    AF.LCD.pushColors(pix_buffer, np);
   }
 }
 
