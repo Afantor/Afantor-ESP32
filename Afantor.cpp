@@ -3,7 +3,7 @@
 
 #include "Afantor.h"
 
-void Afant::begin(bool LCDEnable, bool SDEnable) {
+void Afant::begin(bool LCD_Enable, bool SD_Enable) {
     
     // UART 
     Serial.begin(115200);
@@ -15,28 +15,26 @@ void Afant::begin(bool LCDEnable, bool SDEnable) {
     // digitalWrite(SCL, 1);
 
     // TONE
-//    Speaker.begin();
-//
-//    // Setup the button with an internal pull-up
-//    pinMode(BUTTON_A_PIN, INPUT_PULLUP);
-//    pinMode(BUTTON_B_PIN, INPUT_PULLUP);
-//    pinMode(BUTTON_C_PIN, INPUT_PULLUP);
-//    pinMode(BUTTON_D_PIN, INPUT_PULLUP);
-//    // SPI LCD INIT
-//    if (LCDEnable) 
-//        Lcd.begin();
-//
-//    // TF Card
-//    if (SDEnable) 
-//        SD.begin(TFCARD_CS_PIN, SPI, 40000000);
+    Speaker.begin();
+
+    // Setup the button with an internal pull-up
+    // pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+    // SPI LCD INIT
+    if (LCD_Enable)
+        LCD.begin();
+
+    // TF Card
+    if (SD_Enable)
+        SD.begin(SDCARD_CS_PIN, SPI, 40000000);
 //    
 //    // Set wakeup button
 //    setWakeupButton(BUTTON_A_PIN);
-//
-//    // MPU6050
-//    #ifdef MPU6050_INSDE
-//    Wire.begin();
-//    #endif
+
+    // MPU6050
+#ifdef MPU6050_INSDE
+    Wire.begin();
+#endif
 
     Serial.println("OK");
 }
@@ -48,8 +46,8 @@ void Afant::update() {
 //    BtnB.read();
 //    BtnC.read();
 //
-//    //Speaker update
-//    Speaker.update();
+    //Speaker update
+    Speaker.update();
 }
 
 void Afant::setWakeupButton(uint8_t button) {

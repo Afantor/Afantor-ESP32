@@ -57,7 +57,7 @@ void AFDisplay::progressBar(int x, int y, int w, int h, uint8_t val) {
   fillRect(x + 1, y + 1, w * (((float)val) / 100.0), h - 1, 0x09F1);
 }
 
-#include "utility/qrcode.h"
+#include "utility/QRcode.h"
 void AFDisplay::qrcode(const char *string, uint16_t x, uint16_t y, uint8_t width, uint8_t version) {
   
   // Create the QR code
