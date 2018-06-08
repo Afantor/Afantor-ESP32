@@ -41,6 +41,7 @@ void setup()
 void loop()
 {
   	analog_value = analogRead(ANALOG_PIN_0);
+  	AF.LCD.print(analog_value);
   	Serial.println(analog_value);
-  	delay(500);
+  	delay(100);
 }
