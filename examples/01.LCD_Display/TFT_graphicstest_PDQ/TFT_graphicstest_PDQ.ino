@@ -385,7 +385,8 @@ uint32_t testText()
 	AF.LCD.fillScreen(TFT_BLACK);
 	uint32_t start = micros_start();
 	AF.LCD.setCursor(0, 0);
-	AF.LCD.setTextColor(TFT_WHITE,TFT_BLACK);	AF.LCD.setTextSize(1);
+	AF.LCD.setTextColor(TFT_WHITE,TFT_BLACK);	
+	AF.LCD.setTextSize(1);
 	AF.LCD.println(F("Hello World!"));
 	AF.LCD.setTextSize(2);
 	AF.LCD.setTextColor(AF.LCD.color565(0xff, 0x00, 0x00));
@@ -394,9 +395,11 @@ uint32_t testText()
 	AF.LCD.print(F("GREEN "));
 	AF.LCD.setTextColor(AF.LCD.color565(0x00, 0x00, 0xff));
 	AF.LCD.println(F("BLUE"));
-	AF.LCD.setTextColor(TFT_YELLOW); AF.LCD.setTextSize(2);
+	AF.LCD.setTextColor(TFT_YELLOW); 
+	AF.LCD.setTextSize(2);
 	AF.LCD.println(1234.56);
-	AF.LCD.setTextColor(TFT_RED);		AF.LCD.setTextSize(3);
+	AF.LCD.setTextColor(TFT_RED);		
+	AF.LCD.setTextSize(3);
 	AF.LCD.println(0xDEADBEEF, HEX);
 	AF.LCD.println();
 	AF.LCD.setTextColor(TFT_GREEN);
@@ -404,7 +407,7 @@ uint32_t testText()
 	AF.LCD.println(F("Groop"));
 	AF.LCD.setTextSize(2);
 	AF.LCD.println(F("I implore thee,"));
-  AF.LCD.setTextColor(TFT_GREEN);
+  	AF.LCD.setTextColor(TFT_GREEN);
 	AF.LCD.setTextSize(1);
 	AF.LCD.println(F("my foonting turlingdromes."));
 	AF.LCD.println(F("And hooptiously drangle me"));

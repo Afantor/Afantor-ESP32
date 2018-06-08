@@ -33,13 +33,18 @@ void setup()
 {
   	Serial.begin(115200);
   	AF.begin();
-  	AF.LCD.print("Hello World");
+    AF.LCD.setTextSize(2);
+  	AF.LCD.print(F("Hello World"));
   	delay(1000); // give me time to bring up serial monitor
   	Serial.println("ESP32 Analog Read Test");
+    AF.LCD.fillScreen(TFT_BLACK);            // Clear screen
+    AF.LCD.setCursor(0, 0);
+    AF.LCD.print(F("Analog: "));
 }
 
 void loop()
 {
+    AF.LCD.setCursor(100, 0);
   	analog_value = analogRead(ANALOG_PIN_0);
   	AF.LCD.print(analog_value);
   	Serial.println(analog_value);
