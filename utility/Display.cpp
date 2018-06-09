@@ -10,7 +10,7 @@ void AFDisplay::begin() {
   TFT_eSPI::begin();
   setRotation(1);
   fillScreen(0);
-
+  setTextSize(2);
   // Init the back-light LED PWM
   //ledcSetup(BLK_PWM_CHANNEL, 10000, 8);
   //ledcAttachPin(TFT_BL, BLK_PWM_CHANNEL);
